@@ -1,0 +1,27 @@
+{
+  "name": "react-truffle-dapp-template",
+  "description": "",
+  "main": "/web-app/src/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "@truffle/hdwallet-provider": "^2.0.6",
+    "dotenv": "^16.0.0",
+    "openzeppelin-solidity": "^4.5.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sergera/react-truffle-dapp-template.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sergera/react-truffle-dapp-template/issues"
+  },
+  "homepage": "https://github.com/sergera/react-truffle-dapp-template#readme"
+}

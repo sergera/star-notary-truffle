@@ -1,0 +1,51 @@
+@import './pages/Landing/Landing.css';
+@import './pages/Components/Components.css';
+@import './pages/Notes/Notes.css';
+@import './pages/ErrorNotFound/ErrorNotFound.css';
+@import './pages/Error/Error.css';
+
+@import './components/Header/Header.css';
+@import './components/Header/ConnectMetamask/ConnectMetamask.css';
+@import './components/Nav/Nav.css';
+@import './components/Footer/Footer.css';
+@import './components/Footer/Contacts/Contacts.css';
+
+@import './components/ModalContainer/ModalContainer.css';
+@import './components/ModalContainer/provider/ModalChainNotAdded/ModalChainNotAdded.css';
+@import './components/ModalContainer/provider/ModalDisabled/ModalDisabled.css';
+@import './components/ModalContainer/provider/ModalDisconnected/ModalDisconnected.css';
+@import './components/ModalContainer/provider/ModalNotConnected/ModalNotConnected.css';
+@import './components/ModalContainer/provider/ModalSelectChain/ModalSelectChain.css';
+@import './components/ModalContainer/provider/ModalPleaseConnect/ModalPleaseConnect.css';
+@import './components/ModalContainer/form/ModalIncompleteForm/ModalIncompleteForm.css';
+@import './components/NotificationContainer/NotificationContainer.css';
+@import './components/NotificationContainer/SuccessNotification/SuccessNotification.css';
+@import './components/NotificationContainer/InfoNotification/InfoNotification.css';
+@import './components/NotificationContainer/WarningNotification/WarningNotification.css';
+@import './components/NotificationContainer/ErrorNotification/ErrorNotification.css';
+@import './components/ToastContainer/ToastContainer.css';
+@import './components/ToastContainer/SuccessToast/SuccessToast.css';
+@import './components/ToastContainer/InfoToast/InfoToast.css';
+@import './components/ToastContainer/WarningToast/WarningToast.css';
+@import './components/ToastContainer/ErrorToast/ErrorToast.css';
+
+@import './components/UI/Button/Button.css';
+@import './components/UI/TextInput/TextInput.css';
+@import './components/UI/ValidationRules/ValidationRules.css';
+@import './components/UI/TextInputWithRules/TextInputWithRules.css';
+@import './components/UI/RadioInput/RadioInput.css';
+@import './components/UI/CheckboxInput/CheckboxInput.css';
+@import './components/UI/Select/Select.css';
+
+.app {
+	display:flex;
+	flex-direction: column;
+	height: 100vh;
+	width: 100%;
+}
+
+/* make outline for any element on focus */
+*:focus {
+	outline-offset: 0.2rem;
+	outline: 1px solid var(--background-text) !important;
+}

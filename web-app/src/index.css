@@ -1,0 +1,169 @@
+/* modulate root font size to use rem in layout */
+@media (max-width: 30720px) { /*32k*/
+	:root { font-size: 384px; }
+}
+@media (max-width: 15360px) { /*16k*/
+	:root { font-size: 192px; }
+}
+@media (max-width: 7680px) { /*8k*/
+	:root { font-size: 96px; }
+}
+@media (max-width: 3840px) { /*4K UHD*/
+  :root { font-size: 48px; }
+}
+@media (max-width: 2560px) { /*QHD*/
+  :root { font-size: 30px; }
+}
+@media (max-width: 1920px) { /*FHD*/
+  :root { font-size: 24px; }
+}
+@media (max-width: 1600px) { /*HD+*/
+  :root { font-size: 20px; }
+}
+@media (max-width: 1366px) { /*HD*/
+  :root { font-size: 18px; }
+}
+@media (max-width: 900px) { /*SVGA*/
+  :root { font-size: 14px; }
+}
+@media (max-width: 420px) { /*Mobile*/
+  :root { font-size: 10px; }
+	/* limit minimum size for reading */
+	* { font-size: 12px; }
+}
+@media (max-width: 390px) {
+  :root { font-size: 8px; }
+}
+@media (max-width: 360px) {
+  :root { font-size: 7px; }
+}
+@media (max-width: 270px) {
+  :root { font-size: 6px; }
+}
+@media (max-width: 130px) {
+  :root { font-size: 5px; }
+}
+@media (max-width: 65px) {
+  :root { font-size: 4px; }
+}
+
+:root {
+	/* hues and values */
+	--black: #000000;
+	--white: #ffffff;
+	--light: #f1f1f1;
+	--dark: #0e0e0e;
+	--light-blue: #116ffc;
+	--dark-blue: #04214d;
+	--light-red: #e40f28;
+	--dark-red: #4e0911;
+	--light-green: #1adb2d;
+	--dark-green: #032506;
+	--light-gold: #e5ca1a;
+	--dark-gold: #5a4f09;
+
+	/* app */
+	--background: var(--black);
+	--background-text: var(--light);
+	--foreground: var(--dark);
+	--foreground-text: var(--light);
+
+	/* button */
+	--btn--primary: var(--light-blue);
+	--btn--secondary: var(--light-green);
+	--btn--warning: var(--light-red);
+	--btn--special: var(--light-gold);
+	--btn-text: var(--background);
+
+	/* header */
+	--header: var(--foreground);
+	--header-text: var(--foreground-text);
+	--header-detail: var(--background);
+
+	/* nav */
+	--nav: var(--foreground);
+	--nav-link: var(--foreground-text);
+
+	/* footer */
+	--footer: var(--foreground);
+	--footer-text: var(--foreground-text);
+
+	/* modal */
+	--modal: var(--foreground);
+	--modal-text: var(--foreground-text);
+
+	/* input */
+	--input-border: var(--background-text);
+	--input-background: var(--background);
+	--input-text: var(--background-text);
+	--input-invalid: var(--light-red);
+
+	/* validation rules */
+	--validation-rules-text: var(--light-red);
+
+	/* notifications */
+	--success-notification: var(--light-green);
+	--success-notification-text: var(--black);
+	--success-notification-btn: var(--black);
+	--success-notification-btn-text: var(--success-notification);
+
+	--info-notification: var(--light-blue);
+	--info-notification-text: var(--black);
+	--info-notification-btn: var(--black);
+	--info-notification-btn-text: var(--info-notification);
+
+	--warning-notification: var(--light-gold);
+	--warning-notification-text: var(--black);
+	--warning-notification-btn: var(--black);
+	--warning-notification-btn-text: var(--warning-notification);
+
+	--error-notification: var(--light-red);
+	--error-notification-text: var(--black);
+	--error-notification-btn: var(--black);
+	--error-notification-btn-text: var(--error-notification);
+
+	/* toasts */
+	--success-toast: var(--light-green);
+	--success-toast-text: var(--black);
+
+	--info-toast: var(--light-blue);
+	--info-toast-text: var(--black);
+
+	--warning-toast: var(--light-gold);
+	--warning-toast-text: var(--black);
+
+	--error-toast: var(--light-red);
+	--error-toast-text: var(--black);
+}
+
+/* make width and height include padding and border */
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+	padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+	overflow-x: hidden;
+  max-width: 100vw;
+	background-color: var(--background);
+	color: var(--background-text);
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+p {
+	margin: 0;
+	padding: 0;
+}
