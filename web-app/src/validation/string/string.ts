@@ -98,3 +98,39 @@ export function isWei(str: string) {
 	const regex = /^(?=([1-9][0-9]{0,77}|0))\1$/gu;
 	return regex.test(str);
 };
+
+export function isHour(str: string) {
+	/* max 2 digits */
+	/* no leading zeros */
+	/* min: 0, max: 24 */
+	const regex = /^(?=(2[0-4]|1[0-9]|[0-9]))\1$/gu;
+	return regex.test(str);
+};
+
+export function isMinute(str: string) {
+	/* max 2 digits */
+	/* no leading zeros */
+	/* min: 0, max: 60 */
+	const regex = /^(?=(60|[1-5][0-9]|[0-9]))\1$/gu;
+	return regex.test(str);
+};
+
+export function isSecond(str: string) {
+	/* max 2 whole digits */
+	/* no leading zeros in the whole portion */
+	/* max 2 decimal digits of precision */
+	/* no trailing zeros in the fractional portion */
+	/* max one comma or point (decimal separator) */
+	/* min: 0.0, max: 60.99 */
+	const regex = /^(?=(60|[1-5][0-9]|[0-9]))\1(?=((?:[.,](?:[0-9][1-9]|[0-9]))?))\2$/gu;
+	return regex.test(str);
+};
+
+export function isDecDegree(str: string) {
+	/* max 2 digits */
+	/* no leading zeros */
+	/* no negative zero (-0) */
+	/* min: -90, max: 90 */
+	const regex = /^(?=([-]?90|[-]?[1-8][0-9]|[-]?[1-9]|0))\1$/gu;
+	return regex.test(str);
+};
