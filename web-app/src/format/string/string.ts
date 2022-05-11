@@ -28,3 +28,27 @@ export function stringToAsciiHex(str: string) {
 export function asciiHexToString(hex: string) {
 	return utils.hexToAscii(hex);
 };
+
+export function toPaddedInteger(intString: string, length: number) {
+	return intString.padStart(length, "0");
+};
+
+export function toPaddedFloat(floatString: string, leftLength: number, rightLength: number) {
+	let divisor = "";
+	if(floatString.includes(",")) {
+		divisor = ",";
+	} else {
+		divisor = ".";
+	}
+
+	let [integer, decimal] = floatString.split(divisor);
+	decimal = decimal || "";
+	return integer.padStart(leftLength, "0") + divisor + decimal.padEnd(rightLength, "0");
+};
+
+export function toSignedInteger(intString: string) {
+	if(intString[0] !== "-" && intString[0] !== "+") {
+		return "+" + intString;
+	}
+	return intString;
+};
