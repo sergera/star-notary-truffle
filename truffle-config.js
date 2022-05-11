@@ -22,6 +22,7 @@ require('dotenv').config();
 
 const HDWalletProvider = require('@truffle/hdwallet-provider');
 const infuraKey = process.env.INFURA_KEY;
+const etherscanKey = process.env.ETHERSCAN_KEY;
 const mnemonic = process.env.MNEMONIC;
 
 module.exports = {
@@ -34,6 +35,12 @@ module.exports = {
    *
    * $ truffle test --network <network-name>
    */
+
+	plugins: ['truffle-plugin-verify'],
+
+	api_keys: {
+    etherscan: etherscanKey,
+  },
 
   networks: {
     // Useful for testing. The `development` name is special - truffle uses it by default
