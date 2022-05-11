@@ -144,32 +144,28 @@ export function CreateStar() {
 				toPaddedFloat(decArcSeconds, 2, 2)
 			);
 
-			setCoordinates(stringToAsciiHex(coordinates));
-
-			// const response = await txCall({
-			// 	contract: "StarNotary",
-			// 	method: "createStar",
-			// 	args: [
-			// 		stringToAsciiHex(starName), 
-			// 		stringToAsciiHex(coordinates)
-			// 	],
-			// 	options: {
-			// 		from: store.getState().account.address
-			// 	},
-			// 	onTransactionHash: (transactionHash: string) => {
-			// 		store.dispatch(openSuccessToast());
-			// 		resetFields();
-			// 	},
-			// 	onError: (error: Error) => {
-			// 		store.dispatch(openErrorNotification(getErrorMessage(error)));
-			// 	}
-			// });
+			const response = await txCall({
+				contract: "StarNotary",
+				method: "createStar",
+				args: [
+					stringToAsciiHex(toLowerTrim(starName)), 
+					stringToAsciiHex(coordinates)
+				],
+				options: {
+					from: store.getState().account.address
+				},
+				onTransactionHash: (transactionHash: string) => {
+					store.dispatch(openSuccessToast());
+					resetFields();
+				},
+				onError: (error: Error) => {
+					store.dispatch(openErrorNotification(getErrorMessage(error)));
+				}
+			});
 		} else {
 			store.dispatch(openModal(MODAL_TYPES.incompleteForm));
 		}
 	}
-
-	let [coordinates, setCoordinates] = useState("");
 
   return (
     <div className="create-star">
@@ -177,11 +173,6 @@ export function CreateStar() {
 
 			<p>Here you can register a new star!</p>
 			<p>Both the new star's coordinate and name must be unique</p>
-
-			<p>NAME</p>
-			<p>{stringToAsciiHex(toLowerTrim(starName))}</p>
-			<p>COORDINATE</p>
-			<p>{coordinates}</p>
 
 			<div
 				className="create-star__form-group"
