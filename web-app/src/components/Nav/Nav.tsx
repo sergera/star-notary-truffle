@@ -7,7 +7,7 @@ export function Nav() {
 			<div className="nav__link">
 				<Link 
 					to="/" 
-					style={{ color: 'inherit', textDecoration: 'inherit'}}
+					style={{ color: 'inherit', textDecoration: 'inherit', padding: '0.5rem' }}
 				>
 					Landing
 				</Link>
@@ -15,7 +15,7 @@ export function Nav() {
 			<div className="nav__link">
 				<Link 
 					to="/create" 
-					style={{ color: 'inherit', textDecoration: 'inherit'}}
+					style={{ color: 'inherit', textDecoration: 'inherit', padding: '0.5rem' }}
 				>
 					Create Star
 				</Link>
@@ -23,7 +23,7 @@ export function Nav() {
 			<div className="nav__link">
 				<Link 
 					to="/components" 
-					style={{ color: 'inherit', textDecoration: 'inherit'}}
+					style={{ color: 'inherit', textDecoration: 'inherit', padding: '0.5rem' }}
 				>
 					Components
 				</Link>
