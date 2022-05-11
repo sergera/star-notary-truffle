@@ -103,7 +103,7 @@ contract StarNotary is ERC721 {
 		emit PutForSale(_tokenId, _price);
 	}
 
-	function removeFromSale(uint256 _tokenId) external {
+	function removeStarFromSale(uint256 _tokenId) external {
 		require(ownerOf(_tokenId) == msg.sender, "You can't remove from sale a Star you don't own");
 
 		approve(address(0), _tokenId);
@@ -240,7 +240,7 @@ contract StarNotary is ERC721 {
 		if(!isInteger(deg[1])) return false;
 		if(!isInteger(deg[2])) return false;
 		/* if number greater than 90 or less than -90 return false */
-		if(deg[1] == 0x39 && deg[2] != 0) return false;
+		if(deg[1] == 0x39 && deg[2] != 0x30) return false;
 		return true;
 	}
 }
