@@ -522,7 +522,7 @@ contract("StarNotary", (accs) => {
 	accounts = accs;
 	owner = accounts[0];
 
-	it("allows user to change star name if owner", async() => {
+	it("emits ChangedName event on name changed", async() => {
 		let instance = await StarNotary.deployed();
 
 		let user1 = accounts[1];
