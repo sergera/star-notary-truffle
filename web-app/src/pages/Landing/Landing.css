@@ -5,3 +5,8 @@
 .landing > * {
 	margin-bottom: 2rem;
 }
+
+.landing-page__inline-anchor {
+	margin-left: 0.5rem;
+	margin-right: 0.5rem;
+}
