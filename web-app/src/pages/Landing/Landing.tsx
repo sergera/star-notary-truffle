@@ -32,14 +32,6 @@ export function Landing() {
 				Components Page:
 			</Link>
 			<p>A collection of the components built for this template</p>
-
-			<Link 
-				to="/notes" 
-				className="landing__link"
-			>
-				Notes Contract Page:
-			</Link>
-			<p>A preview of contract interaction with using the "Notes" contract provided as an example</p>
     </div>
   );
 };

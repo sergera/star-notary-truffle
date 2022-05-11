@@ -14,18 +14,18 @@ export function Nav() {
 			</div>
 			<div className="nav__link">
 				<Link 
-					to="/components" 
+					to="/create" 
 					style={{ color: 'inherit', textDecoration: 'inherit'}}
 				>
-					Components
+					Create Star
 				</Link>
 			</div>
 			<div className="nav__link">
 				<Link 
-					to="/notes" 
+					to="/components" 
 					style={{ color: 'inherit', textDecoration: 'inherit'}}
 				>
-					Notes
+					Components
 				</Link>
 			</div>
 		</nav>

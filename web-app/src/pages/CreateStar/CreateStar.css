@@ -1,0 +1,11 @@
+.create-star {
+	padding: 1rem;
+}
+
+.create-star > * {
+	margin-bottom: 2rem;
+}
+
+.create-star__form-group > * {
+	margin-bottom: 0.5rem;
+}
