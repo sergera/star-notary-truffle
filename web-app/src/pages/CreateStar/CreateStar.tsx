@@ -169,125 +169,129 @@ export function CreateStar() {
 
   return (
     <div className="create-star">
-			<h1>Register a Star!</h1>
+			<div className="create-star__content">
+				<h1>Register a Star!</h1>
 
-			<p>Here you can register a new star!</p>
-			<p>Both the new star's coordinate and name must be unique</p>
+				<p>Here you can register a new star!</p>
+				<p>Both the new star's coordinate and name must be unique</p>
 
-			<div
-				className="create-star__form-group"
-			>
-				<h3>Star Name</h3>
-				<TextInputWithRules 
-					handleChange={getStarName}
-					name="Name"
-					value={starName}
-					isValid={isValidStarName}
-					rules={[
-						"between 4 and 32 letters",
-						"non-consecutive spaces in between"
-					]}
-					isRequired={true}
-					styleClass="text-input-1of4"
-					handleBlur={formatStarName}
+				<div
+					className="create-star__input-group"
+				>
+					<h3>Star Name</h3>
+					<TextInputWithRules 
+						handleChange={getStarName}
+						name="Name"
+						value={starName}
+						isValid={isValidStarName}
+						rules={[
+							"between 4 and 32 letters",
+							"non-consecutive spaces in between"
+						]}
+						isRequired={true}
+						styleClass="text-input-1of4"
+						handleBlur={formatStarName}
+					/>
+				</div>
+
+				<div className="create-star__coordinates">
+					<div
+						className="create-star__input-group"
+					>
+						<h3>Right Ascention (RA):</h3>
+						<TextInputWithRules 
+							handleChange={getRAHours}
+							name="Hours"
+							value={RAHours}
+							isValid={isValidRAHours}
+							rules={[
+								"must be an integer min: 0, max: 24",
+								"no leading zeros"
+							]}
+							isRequired={true}
+							styleClass="text-input-1of16"
+						/>
+						<TextInputWithRules 
+							handleChange={getRAMinutes}
+							name="Minutes"
+							value={RAMinutes}
+							isValid={isValidRAMinutes}
+							rules={[
+								"must be an integer min: 0, max: 60",
+								"no leading zeros"
+							]}
+							isRequired={true}
+							styleClass="text-input-1of16"
+						/>
+						<TextInputWithRules 
+							handleChange={getRASeconds}
+							name="Seconds"
+							value={RASeconds}
+							isValid={isValidRASeconds}
+							rules={[
+								"must be a real number min: 0, max: 60",
+								"fractional part with maximum 2 decimal places",
+								"no leading zeros in the whole portion",
+								"no trailing zeros in the decimal portion"
+							]}
+							isRequired={true}
+							styleClass="text-input-1of16"
+							handleBlur={formatRASeconds}
+						/>
+					</div>
+
+					<div
+						className="create-star__input-group"
+					>
+						<h3>Declination (DEC):</h3>
+						<TextInputWithRules 
+							handleChange={getDecDegrees}
+							name="Degrees"
+							value={decDegrees}
+							isValid={isValidDecDegrees}
+							rules={[
+								"must be an integer min: -90, max: 90",
+								"no leading zeros",
+								"no negative zero (-0)"
+							]}
+							isRequired={true}
+							styleClass="text-input-1of16"
+						/>
+						<TextInputWithRules 
+							handleChange={getDecArcMinutes}
+							name="Arcminutes"
+							value={decArcMinutes}
+							isValid={isValidDecArcMinutes}
+							rules={[
+								"must be an integer min: 0, max: 60",
+								"no leading zeros"
+							]}
+							isRequired={true}
+							styleClass="text-input-1of16"
+						/>
+						<TextInputWithRules 
+							handleChange={getDecArcSeconds}
+							name="Arcseconds"
+							value={decArcSeconds}
+							isValid={isValidDecArcSeconds}
+							rules={[
+								"must be a real number min: 0, max: 60",
+								"fractional part with maximum 2 decimal places",
+								"no leading zeros in the whole portion",
+								"no trailing zeros in the decimal portion"
+							]}
+							isRequired={true}
+							styleClass="text-input-1of16"
+							handleBlur={formatDecArcSeconds}
+						/>
+					</div>
+				</div>
+
+				<ButtonWithKillswitch
+					name="submit"
+					handleClick={submitStar}
 				/>
 			</div>
-
-			<div
-				className="create-star__form-group"
-			>
-				<h3>Right Ascention (RA):</h3>
-				<TextInputWithRules 
-					handleChange={getRAHours}
-					name="Hours"
-					value={RAHours}
-					isValid={isValidRAHours}
-					rules={[
-						"must be an integer min: 0, max: 24",
-						"no leading zeros"
-					]}
-					isRequired={true}
-					styleClass="text-input-1of16"
-				/>
-				<TextInputWithRules 
-					handleChange={getRAMinutes}
-					name="Minutes"
-					value={RAMinutes}
-					isValid={isValidRAMinutes}
-					rules={[
-						"must be an integer min: 0, max: 60",
-						"no leading zeros"
-					]}
-					isRequired={true}
-					styleClass="text-input-1of16"
-				/>
-				<TextInputWithRules 
-					handleChange={getRASeconds}
-					name="Seconds"
-					value={RASeconds}
-					isValid={isValidRASeconds}
-					rules={[
-						"must be a real number min: 0, max: 60",
-						"fractional part with maximum 2 decimal places",
-						"no leading zeros in the whole portion",
-						"no trailing zeros in the decimal portion"
-					]}
-					isRequired={true}
-					styleClass="text-input-1of16"
-					handleBlur={formatRASeconds}
-				/>
-			</div>
-
-			<div
-				className="create-star__form-group"
-			>
-				<h3>Declination (DEC):</h3>
-				<TextInputWithRules 
-					handleChange={getDecDegrees}
-					name="Degrees"
-					value={decDegrees}
-					isValid={isValidDecDegrees}
-					rules={[
-						"must be an integer min: -90, max: 90",
-						"no leading zeros",
-						"no negative zero (-0)"
-					]}
-					isRequired={true}
-					styleClass="text-input-1of16"
-				/>
-				<TextInputWithRules 
-					handleChange={getDecArcMinutes}
-					name="Arcminutes"
-					value={decArcMinutes}
-					isValid={isValidDecArcMinutes}
-					rules={[
-						"must be an integer min: 0, max: 60",
-						"no leading zeros"
-					]}
-					isRequired={true}
-					styleClass="text-input-1of16"
-				/>
-				<TextInputWithRules 
-					handleChange={getDecArcSeconds}
-					name="Arcseconds"
-					value={decArcSeconds}
-					isValid={isValidDecArcSeconds}
-					rules={[
-						"must be a real number min: 0, max: 60",
-						"fractional part with maximum 2 decimal places",
-						"no leading zeros in the whole portion",
-						"no trailing zeros in the decimal portion"
-					]}
-					isRequired={true}
-					styleClass="text-input-1of16"
-					handleBlur={formatDecArcSeconds}
-				/>
-			</div>
-
-			<ButtonWithKillswitch
-				name="submit"
-				handleClick={submitStar}
-			/>
     </div>
   );
 };

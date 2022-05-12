@@ -1,11 +1,23 @@
 .create-star {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.create-star__content {
 	padding: 1rem;
 }
 
-.create-star > * {
+.create-star__content > * {
 	margin-bottom: 2rem;
 }
 
-.create-star__form-group > * {
+.create-star__coordinates {
+	display: flex;
+	flex-direction: row;
+}
+
+.create-star__input-group > * {
 	margin-bottom: 0.5rem;
 }
