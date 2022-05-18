@@ -120,7 +120,7 @@ contract("StarNotary", (accs) => {
 
 		let user2 = accounts[2];
 		let differentStarCoordinatesHex = asciiToHex(RAHours+RAMinutes+RASeconds+decDegrees+"45"+decArcSeconds);
-		tx = instance.createStar(starName, differentStarCoordinatesHex, {from: user2});
+		tx = instance.createStar(starNameHex, differentStarCoordinatesHex, {from: user2});
 		expectThrow(tx);
 	});
 });
@@ -192,6 +192,7 @@ contract("StarNotary", (accs) => {
 		const lastEvent = pastEvents[pastEvents.length-1];
 		assert.equal(lastEvent.event, "PutForSale")
 		let lastEventReturnValues = lastEvent.returnValues;
+		assert.equal(lastEventReturnValues.owner, user1);
 		assert.equal(lastEventReturnValues.tokenId, starFirstId);
 		assert.equal(lastEventReturnValues.priceInWei, starPrice);
 	});
@@ -271,7 +272,8 @@ contract("StarNotary", (accs) => {
 		let pastEvents = await instance.getPastEvents("allEvents", { fromBlock: 1 });
 		const lastEvent = pastEvents[pastEvents.length-1];
 		assert.equal(lastEvent.event, "RemovedFromSale")
-		let lastEventReturnValues = pastEvents[0].returnValues;
+		let lastEventReturnValues = lastEvent.returnValues;
+		assert.equal(lastEventReturnValues.owner, user1);
 		assert.equal(lastEventReturnValues.tokenId, starFirstId);
 	});
 });
@@ -330,7 +332,7 @@ contract("StarNotary", (accs) => {
 	accounts = accs;
 	owner = accounts[0];
 
-	it("emits Bought event after the sale", async() => {
+	it("emits Sold event after the sale", async() => {
 		let instance = await StarNotary.deployed();
 	
 		let user1 = accounts[1];
@@ -349,10 +351,10 @@ contract("StarNotary", (accs) => {
 
 		let pastEvents = await instance.getPastEvents("allEvents", { fromBlock: 1 });
 		const lastEvent = pastEvents[pastEvents.length-1];
-		assert.equal(lastEvent.event, "Bought")
+		assert.equal(lastEvent.event, "Sold")
 		let lastEventReturnValues = lastEvent.returnValues;
-		assert.equal(lastEventReturnValues.tokenId, starFirstId);
 		assert.equal(lastEventReturnValues.newOwner, user2);
+		assert.equal(lastEventReturnValues.tokenId, starFirstId);
 	});
 });
 
@@ -375,6 +377,28 @@ contract("StarNotary", (accs) => {
 		await instance.buyStar(starFirstId, {from: user2, value: moreThanPrice});
 		approvedAddress = await instance.getApproved.call(starFirstId);
 		assert.equal(approvedAddress, 0);
+	});
+});
+
+contract("StarNotary", (accs) => {
+	accounts = accs;
+	owner = accounts[0];
+
+	it("removes star from sale after the sale", async() => {
+		let instance = await StarNotary.deployed();
+	
+		let user1 = accounts[1];
+		let user2 = accounts[2];
+		let starPrice = web3.utils.toWei(".01", "ether");
+		let moreThanPrice = web3.utils.toWei(".05", "ether");
+	
+		await instance.createStar(starNameHex, coordinatesHex, {from: user1});
+		await instance.putStarUpForSale(starFirstId, starPrice, {from: user1});
+		let approvedAddress = await instance.getApproved.call(starFirstId);
+		assert.equal(approvedAddress, instance.address);
+		await instance.buyStar(starFirstId, {from: user2, value: moreThanPrice});
+		salePriceAfterSale = await instance.tokenIdToSalePrice.call(starFirstId);
+		assert.equal(salePriceAfterSale, 0);
 	});
 });
 
@@ -540,6 +564,7 @@ contract("StarNotary", (accs) => {
 		const lastEvent = pastEvents[pastEvents.length-1];
 		assert.equal(lastEvent.event, "ChangedName")
 		let lastEventReturnValues = lastEvent.returnValues;
+		assert.equal(lastEventReturnValues.owner, user1);
 		assert.equal(lastEventReturnValues.tokenId, starFirstId);
 		assert.equal(lastEventReturnValues.newName, newStarNameHex);
 	});
