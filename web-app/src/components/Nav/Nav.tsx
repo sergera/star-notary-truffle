@@ -14,6 +14,14 @@ export function Nav() {
 			</div>
 			<div className="nav__link">
 				<Link 
+					to="/stars" 
+					style={{ color: 'inherit', textDecoration: 'inherit', padding: '0.5rem' }}
+				>
+					Stars
+				</Link>
+			</div>
+			<div className="nav__link">
+				<Link 
 					to="/create" 
 					style={{ color: 'inherit', textDecoration: 'inherit', padding: '0.5rem' }}
 				>

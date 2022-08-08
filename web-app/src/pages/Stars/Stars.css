@@ -1,0 +1,14 @@
+.stars {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.stars__content {
+	padding: 1rem;
+}
+
+.stars__content > * {
+	margin-bottom: 2rem;
+}

@@ -6,6 +6,7 @@ import { contractReducer } from './blockchain/contract';
 import { providerReducer } from './blockchain/wallet/provider';
 import { chainReducer } from './blockchain/wallet/chain';
 import { accountReducer } from './blockchain/wallet/account';
+import { starReducer } from './star';
 import { modalReducer } from './modal';
 import { notificationReducer } from './notification';
 import { toastReducer } from './toast';
@@ -16,6 +17,7 @@ export const combinedReducer = combineReducers({
 	provider: providerReducer,
 	chain: chainReducer,
 	account: accountReducer,
+	star: starReducer,
 	modal: modalReducer,
 	notification: notificationReducer,
 	toast: toastReducer,

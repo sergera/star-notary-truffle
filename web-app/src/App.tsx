@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import { Landing } from './pages/Landing';
+import { ConnectedStars as Stars } from './pages/Stars';
 import  { CreateStar } from './pages/CreateStar';
 import { Components } from './pages/Components';
 import { ErrorNotFound } from './pages/ErrorNotFound';
@@ -29,6 +30,7 @@ export function App() {
 			<ErrorBoundary> 
 				<Routes>
 						<Route path="/" element={<Landing />} />
+						<Route path="/stars" element={<Stars />} />
 						<Route path="/create" element={<CreateStar />} />
 						<Route path="/components" element={<Components />} />
 						<Route path="/404" element={<ErrorNotFound />} />

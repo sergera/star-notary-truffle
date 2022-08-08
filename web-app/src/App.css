@@ -1,4 +1,5 @@
 @import './pages/Landing/Landing.css';
+@import './pages/Stars/Stars.css';
 @import './pages/CreateStar/CreateStar.css';
 @import './pages/Components/Components.css';
 @import './pages/ErrorNotFound/ErrorNotFound.css';
