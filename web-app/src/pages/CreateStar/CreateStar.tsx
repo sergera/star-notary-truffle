@@ -43,7 +43,6 @@ export function CreateStar() {
 	let formatStarName = (value: string) => {
 		const formattedValue = toCapitalizedName(value);
 		const isValid = isName(formattedValue) && inLengthRange(formattedValue,4,32);
-		console.log(isValid)
 		setIsValidStarName(isValid);
 		setStarName(formattedValue);
 	}
@@ -198,7 +197,7 @@ export function CreateStar() {
 					<div
 						className="create-star__input-group"
 					>
-						<h3>Right Ascention (RA):</h3>
+						<h3>Right Ascension (RA):</h3>
 						<TextInputWithRules 
 							handleChange={getRAHours}
 							name="Hours"

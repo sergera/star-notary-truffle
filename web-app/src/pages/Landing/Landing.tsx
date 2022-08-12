@@ -22,7 +22,7 @@ export function Landing() {
 								Equatorial Coordinate System
 						</a>
 					</li>
-					<li>The only parameters are Right Ascention (RA) and Declination (DEC)</li>
+					<li>The only parameters are Right Ascension (RA) and Declination (DEC)</li>
 					<li>RA is measured in hours, minutes, and seconds</li>
 					<li>DEC is measured in degrees, arcminutes, and arcseconds</li>
 					<li>Epoch is always 
