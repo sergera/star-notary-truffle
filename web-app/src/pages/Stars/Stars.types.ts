@@ -1,6 +1,11 @@
 import { Star } from "../../state/star/starSlice.types";
 
 export interface StarsProps {
-	getStarRange: Function;
+	getStars: Function;
 	displayList: Star[];
+	page: number;
+	nextPage: Function;
+	previousPage: Function;
+	nextPageExists: boolean;
+	previousPageExists: boolean;
 };

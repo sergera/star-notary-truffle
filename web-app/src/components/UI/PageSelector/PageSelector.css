@@ -1,0 +1,11 @@
+.page-selector {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.page-selector__number {
+	margin-left: 1rem;
+	margin-right: 1rem;
+}

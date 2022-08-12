@@ -20,4 +20,14 @@ export interface BackendStar {
 
 export interface StarSlice {
 	displayList: Star[];
+	sort: string;
+	filter: string;
+	page: number;
+	nextPageExists: boolean;
+	previousPageExists: boolean;
+};
+
+export interface StarRange {
+	start: number;
+	end: number;
 };

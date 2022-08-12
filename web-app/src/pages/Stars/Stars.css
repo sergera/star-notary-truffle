@@ -7,8 +7,5 @@
 
 .stars__content {
 	padding: 1rem;
-}
-
-.stars__content > * {
-	margin-bottom: 2rem;
+	width: 100%;
 }

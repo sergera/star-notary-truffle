@@ -1,37 +1,69 @@
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import { getStarRange } from '../../state/star';
+import { ConnectedStarOptions as StarOptions } from '../../components/StarOptions';
+import { Page } from '../../components/Page';
+
+import { getStars, nextPage, previousPage } from '../../state/star';
 
 import { StarsProps } from './Stars.types';
 import { RootState, Dispatch } from '../../state';
 
 export function Stars({
-	getStarRange,
+	getStars,
 	displayList,
+	page,
+	nextPage,
+	previousPage,
+	nextPageExists,
+	previousPageExists,
 }: StarsProps) {
 
 	useEffect(() => {
-		getStarRange({start: 1, end: 4})
-	}, [getStarRange]);
+		getStars();
+	}, [getStars]);
+
+	const handleNextPage = () => {
+		nextPage();
+		getStars();
+	};
+
+	const handlePreviousPage = () => {
+		previousPage();
+		getStars();
+	};
+
+	const handleOptions = () => {
+		getStars();
+	};
 
   return (
     <div className="stars">
 			<div className="stars__content">
-				<h1>{"Stars:"}</h1>
-				{displayList.map((star, index) => {
-					return (
-						<div key={star.tokenId}>
-							<p>{star.tokenId}</p>
-							<p>{star.name}</p>
-							<p>{star.coordinates}</p>
-							<p>{star.owner}</p>
-							<p>{star.isForSale}</p>
-							<p>{star.priceInEther}</p>
-							<p>{star.date}</p>
-						</div>
-					);
-				})}
+				<StarOptions
+					handleSelect={handleOptions}
+				/>
+				<Page
+					handleClickNext={handleNextPage}
+					handleClickPrevious={handlePreviousPage}
+					shouldDisplayNext={nextPageExists}
+					shouldDisplayPrevious={previousPageExists}
+					pageNumber={page}
+				>
+					{displayList.map((star, index) => {
+						return (
+							<div key={star.tokenId}>
+								<p>{star.tokenId}</p>
+								<p>{star.name}</p>
+								<p>{star.coordinates}</p>
+								<p>{star.owner}</p>
+								<p>{star.isForSale}</p>
+								<p>{star.priceInEther}</p>
+								<p>{star.date}</p>
+							</div>
+						);
+					})}
+				</Page>
 			</div>
     </div>
   );
@@ -40,12 +72,17 @@ export function Stars({
 const mapStateToProps = (state: RootState) => {
 	return {
 		displayList: state.star.displayList,
+		page: state.star.page,
+		nextPageExists: state.star.nextPageExists,
+		previousPageExists: state.star.previousPageExists,
 	};
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
 	return {
-    getStarRange: (range: {start: number, end: number}) => dispatch(getStarRange(range)),
+    getStars: () => dispatch(getStars()),
+		nextPage: () => dispatch(nextPage()),
+		previousPage: () => dispatch(previousPage()),
   };
 };
 
