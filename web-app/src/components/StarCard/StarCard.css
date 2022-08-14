@@ -1,0 +1,115 @@
+.star-card {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height: fit-content;
+	align-items: center;
+	border-radius: 20px;
+	background-color: var(--foreground);
+}
+
+.star-card__header {
+	width: 100%;
+	display: grid;
+}
+
+.star-card__for-sale {
+	background-color: var(--btn--secondary);
+	color: var(--foreground);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.star-card__owned {
+	background-color: var(--btn--primary);
+	color: var(--foreground);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.star-card__flag--left {
+	border-top-left-radius: 20px;
+}
+
+.star-card__details-button {
+	border-top-right-radius: 20px !important;
+	border-bottom-right-radius: 0px !important;
+	border-top-left-radius: 0px !important;
+	border-bottom-left-radius: 0px !important;
+}
+
+.star-card__details-button--lonely {
+	border-top-right-radius: 20px !important;
+	border-bottom-right-radius: 0px !important;
+	border-top-left-radius: 20px !important;
+	border-bottom-left-radius: 0px !important;	
+}
+
+.star-card__body {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	width: 100%;
+	padding-left: 1rem;
+	padding-right: 1rem;
+	padding-top: 1rem;
+}
+
+.star-card__body > * {
+	margin-bottom: 1rem;
+}
+
+.star-card__id {
+	display: table;
+	table-layout: fixed;
+	width: 100%;
+	word-wrap: break-word;
+}
+
+.star-card__name {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	grid-gap: 1rem;
+	width: 100%;
+}
+
+.star-card__name-value {
+	display: table;
+	table-layout: fixed;
+	width: 100%;
+	word-wrap: break-word;
+}
+
+.star-card__price {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	grid-gap: 1rem;
+	width: 100%;
+}
+
+.star-card__price-value {
+	display: table;
+	table-layout: fixed;
+	width: 100%;
+	word-wrap: break-word;
+}
+
+.star-card__footer {
+	width: 100%;
+	display: grid;
+	grid-template-columns: 1fr;
+}
+
+.star-card__footer-button {
+	border-top-right-radius: 0px !important;
+	border-bottom-right-radius: 20px !important;
+	border-top-left-radius: 0px !important;
+	border-bottom-left-radius: 20px !important;	
+}

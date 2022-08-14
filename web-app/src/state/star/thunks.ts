@@ -62,11 +62,37 @@ const convertStarList = (backendStars: BackendStar[]): Star[] => {
 		return {
 			tokenId: star.token_id,
 			name: star.name,
-			coordinates: star.coordinates,
+			coordinates: {
+				rightAscension: {
+					hours: star.coordinates.substring(0,2),
+					minutes: star.coordinates.substring(2,4),
+					seconds: star.coordinates.substring(4,9),
+				},
+				declination: {
+					degrees: star.coordinates.substring(9,12),
+					arcMinutes: star.coordinates.substring(12,14),
+					arcSeconds: star.coordinates.substring(14),
+				},
+			},
 			owner: star.owner,
-			priceInEther: star.price,
+			priceInEther: formatPriceString(star.price),
 			isForSale: star.is_for_sale,
-			date: star.date
+			date: star.date.substring(0,10),
+			time: star.date.substring(11,19),
 		}
 	});
+};
+
+const formatPriceString = (price: string): string => {
+	for (var i = price.length - 1; i >= 0; i--) {
+		if(price[i] === "0") {
+			price = price.slice(0, -1);
+		} else if(price[i] === ".") {
+			price = price.slice(0, -1);
+			break;
+		} else {
+			break;
+		}
+	}
+	return price;
 };

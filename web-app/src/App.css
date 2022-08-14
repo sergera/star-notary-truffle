@@ -31,6 +31,7 @@
 @import './components/ToastContainer/ErrorToast/ErrorToast.css';
 @import './components/Page/Page.css';
 @import './components/StarOptions/StarOptions.css';
+@import './components/StarCard/StarCard.css';
 
 @import './components/UI/Button/Button.css';
 @import './components/UI/TextInput/TextInput.css';

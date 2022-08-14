@@ -18,7 +18,9 @@ export const Page: React.FC<PageProps> = ({
 			shouldDisplayPrevious={shouldDisplayPrevious}
 			pageNumber={pageNumber}
 		/>
-		{children}
+		<div className="page__list">
+			{children}
+		</div>
 		<PageSelector 
 			handleClickNext={handleClickNext}
 			handleClickPrevious={handleClickPrevious}

@@ -1,11 +1,23 @@
 export interface Star {
 	tokenId: string;
 	name: string;
-	coordinates: string;
+	coordinates: {
+		rightAscension: {
+			hours: string;
+			minutes: string;
+			seconds: string;
+		};
+		declination: {
+			degrees: string;
+			arcMinutes: string;
+			arcSeconds: string;
+		};
+	};
 	owner: string;
 	isForSale: boolean;
 	priceInEther: string;
 	date: string;
+	time: string;
 };
 
 export interface BackendStar {

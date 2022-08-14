@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import { ConnectedStarOptions as StarOptions } from '../../components/StarOptions';
 import { Page } from '../../components/Page';
+import { ConnectedStarCard as StarCard } from '../../components/StarCard';
 
 import { getStars, nextPage, previousPage } from '../../state/star';
 
@@ -50,17 +51,9 @@ export function Stars({
 					shouldDisplayPrevious={previousPageExists}
 					pageNumber={page}
 				>
-					{displayList.map((star, index) => {
+					{displayList.map((star) => {
 						return (
-							<div key={star.tokenId}>
-								<p>{star.tokenId}</p>
-								<p>{star.name}</p>
-								<p>{star.coordinates}</p>
-								<p>{star.owner}</p>
-								<p>{star.isForSale}</p>
-								<p>{star.priceInEther}</p>
-								<p>{star.date}</p>
-							</div>
+							<StarCard star={star} />
 						);
 					})}
 				</Page>
