@@ -3,13 +3,13 @@ import { useState } from "react";
 import { TextInputWithRules } from "../../components/UI/TextInputWithRules";
 import { ConnectedButtonWithKillswitch as ButtonWithKillswitch } from "../../components/UI/ButtonWithKillswitch";
 
+import { Log } from "../../logger";
 import { toCapitalizedName, toLowerTrim, stringToAsciiHex, toPaddedInteger, toPaddedFloat, toSignedInteger } from "../../format/string";
 import { isName, inLengthRange, isHour, isMinute, isSecond, isDecDegree } from "../../validation/string";
 import { txCall } from "../../blockchain/contracts";
 import { getErrorMessage } from "../../error";
 
 import { store } from "../../state";
-import { openErrorNotification } from '../../state/notification';
 import { openSuccessToast } from '../../state/toast';
 import { openModal } from "../../state/modal";
 
@@ -158,7 +158,7 @@ export function CreateStar() {
 					resetFields();
 				},
 				onError: (error: Error) => {
-					store.dispatch(openErrorNotification(getErrorMessage(error)));
+					Log.error({msg: getErrorMessage(error), description: "error creating star"})
 				}
 			});
 		} else {
