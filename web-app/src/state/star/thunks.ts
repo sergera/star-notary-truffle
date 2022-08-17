@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { backend } from '../../apis';
 
-import { STAR_SORT_TYPES, PAGE_SIZE } from '../../constants';
+import { STAR_SORT_TYPES } from '../../constants';
 
 import { Star, BackendStar, StarRange } from './starSlice.types';
 import { RootState } from '..';
@@ -16,7 +16,7 @@ export const getStars = createAsyncThunk<
 	async(_,thunkAPI) => {
 		let { getState, dispatch } = thunkAPI;
 		const starState = getState().star;
-		const range = getRange(starState.page);
+		const range = getRange(starState.page, starState.pageSize);
 		switch (starState.sort) {
 			case STAR_SORT_TYPES.newest:
 				dispatch(getStarRange({start: range.start, end: range.end, oldestFirst: false}));
@@ -49,11 +49,11 @@ export const getStarRange = createAsyncThunk<
 	}
 );
 
-const getRange = (page: number): StarRange => {
+const getRange = (page: number, pageSize: number): StarRange => {
 	if(page === 1) {
-		return {start: 1, end: PAGE_SIZE + 1};
+		return {start: 1, end: pageSize + 1};
 	} else {
-		return {start: (PAGE_SIZE * (page - 1)) + 1, end: ((PAGE_SIZE * (page - 1)) + 1) + PAGE_SIZE};
+		return {start: (pageSize * (page - 1)) + 1, end: ((pageSize * (page - 1)) + 1) + pageSize};
 	}
 };
 

@@ -35,6 +35,7 @@ export interface StarSlice {
 	sort: string;
 	filter: string;
 	page: number;
+	pageSize: number;
 	nextPageExists: boolean;
 	previousPageExists: boolean;
 };

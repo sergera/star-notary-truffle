@@ -4,13 +4,14 @@ import { getStarRange } from './thunks';
 
 import { StarSlice, Star } from './starSlice.types';
 
-import { STAR_SORT_TYPES, PAGE_SIZE } from '../../constants';
+import { STAR_SORT_TYPES, PAGE_SIZE_TYPES } from '../../constants';
 
 export const initialState: StarSlice = {
 	displayList: [],
 	filter: "",
 	sort: STAR_SORT_TYPES.newest,
 	page: 1,
+	pageSize: PAGE_SIZE_TYPES.twelve,
 	nextPageExists: false,
 	previousPageExists: false,
 };
@@ -30,6 +31,14 @@ const starSlice = createSlice({
 		resetPagination(state:StarSlice) {
 			state.page = 1;
 		},
+		choosePageSize(state:StarSlice, action:PayloadAction<number>) {
+			const newPageSize = action.payload;
+			if(state.page !== 1) {
+				const firstStarNumber = ((state.page - 1) * state.pageSize) + 1;
+				state.page = Math.floor(firstStarNumber/newPageSize) + 1;
+			}
+			state.pageSize = newPageSize;
+		},
 		chooseSort(state:StarSlice, action:PayloadAction<string>) {
 			state.page = 1;
 			state.sort = action.payload;
@@ -43,7 +52,7 @@ const starSlice = createSlice({
 		builder.addCase(getStarRange.fulfilled, (state:StarSlice, action:PayloadAction<Star[]>) => {
 			const stars = action.payload;
 			const starsNumber = stars.length;
-			if(starsNumber === PAGE_SIZE + 1) {
+			if(starsNumber === state.pageSize + 1) {
 				state.nextPageExists = true;
 				state.displayList = stars.slice(0,-1);
 			} else {
@@ -64,6 +73,7 @@ export const {
 	nextPage,
 	previousPage,
 	resetPagination,
+	choosePageSize,
 	chooseSort,
 	chooseFilter,  
 } = starSlice.actions;

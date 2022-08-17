@@ -1,7 +1,18 @@
 export interface PageProps {
-	handleClickNext: (event: React.MouseEvent<HTMLButtonElement>) => void;
-	handleClickPrevious: (event: React.MouseEvent<HTMLButtonElement>) => void;
-	shouldDisplayNext: boolean;
-	shouldDisplayPrevious: boolean;
+	handleClickNext: Function;
+	nextPage: Function;
+	handleClickPrevious: Function;
+	previousPage: Function;
+	nextPageExists: boolean;
+	previousPageExists: boolean;
 	pageNumber: number;
+	handleSelectSize: Function;
+	selectedPageSize: number;
+	choosePageSize: Function;
+	children: React.ReactNode;
+};
+
+export type PageSizeSelectOption = {
+	label: string;
+	data: {value: number};
 };

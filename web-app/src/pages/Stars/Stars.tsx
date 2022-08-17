@@ -2,10 +2,10 @@ import { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import { ConnectedStarOptions as StarOptions } from '../../components/StarOptions';
-import { Page } from '../../components/Page';
+import { ConnectedPage as Page } from '../../components/Page';
 import { ConnectedStarCard as StarCard } from '../../components/StarCard';
 
-import { getStars, nextPage, previousPage } from '../../state/star';
+import { getStars} from '../../state/star';
 
 import { StarsProps } from './Stars.types';
 import { RootState, Dispatch } from '../../state';
@@ -13,43 +13,22 @@ import { RootState, Dispatch } from '../../state';
 export function Stars({
 	getStars,
 	displayList,
-	page,
-	nextPage,
-	previousPage,
-	nextPageExists,
-	previousPageExists,
 }: StarsProps) {
 
 	useEffect(() => {
 		getStars();
 	}, [getStars]);
 
-	const handleNextPage = () => {
-		nextPage();
-		getStars();
-	};
-
-	const handlePreviousPage = () => {
-		previousPage();
-		getStars();
-	};
-
-	const handleOptions = () => {
-		getStars();
-	};
-
   return (
     <div className="stars">
 			<div className="stars__content">
 				<StarOptions
-					handleSelect={handleOptions}
+					handleSelect={getStars}
 				/>
 				<Page
-					handleClickNext={handleNextPage}
-					handleClickPrevious={handlePreviousPage}
-					shouldDisplayNext={nextPageExists}
-					shouldDisplayPrevious={previousPageExists}
-					pageNumber={page}
+					handleClickNext={getStars}
+					handleClickPrevious={getStars}
+					handleSelectSize={getStars}
 				>
 					{displayList.map((star) => {
 						return (
@@ -65,17 +44,12 @@ export function Stars({
 const mapStateToProps = (state: RootState) => {
 	return {
 		displayList: state.star.displayList,
-		page: state.star.page,
-		nextPageExists: state.star.nextPageExists,
-		previousPageExists: state.star.previousPageExists,
 	};
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
 	return {
     getStars: () => dispatch(getStars()),
-		nextPage: () => dispatch(nextPage()),
-		previousPage: () => dispatch(previousPage()),
   };
 };
 

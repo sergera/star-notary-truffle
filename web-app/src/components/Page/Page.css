@@ -4,6 +4,11 @@
 	flex-direction: column;
 }
 
+.page__size {
+	align-self: flex-end;
+	margin-bottom: 1rem;
+}
+
 .page__list {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr 1fr;
