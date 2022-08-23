@@ -11,10 +11,8 @@
 
  export const CHAIN_IDS: ChainIdsMap = {
 	 "mainnet": 1,
-	 "ropsten": 3,
-	 "rinkeby": 4,
 	 "goerli": 5,
-	 "kovan": 42,
+	 "sepolia": 11155111,
 	 // For Development
 	 "truffle": 1337,
 	 "ganache": 5777,

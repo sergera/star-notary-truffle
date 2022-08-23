@@ -21,7 +21,10 @@
 require('dotenv').config();
 
 const HDWalletProvider = require('@truffle/hdwallet-provider');
-const infuraKey = process.env.INFURA_KEY;
+const mainnetURL = process.env.RPC_PROVIDER_MAINNET_URL;
+const goerliURL = process.env.RPC_PROVIDER_GOERLI_URL;
+const sepoliaURL = process.env.RPC_PROVIDER_SEPOLIA_URL;
+const rpcProviderKey = process.env.RPC_PROVIDER_KEY;
 const etherscanKey = process.env.ETHERSCAN_KEY;
 const mnemonic = process.env.MNEMONIC;
 
@@ -69,11 +72,19 @@ module.exports = {
 			network_id: "1337",       // Any network (default: none)
 		},
 
-		rinkeby: {
-			provider: () => new HDWalletProvider(mnemonic, `https://rinkeby.infura.io/v3/${infuraKey}`),
-			network_id: 4,       // rinkeby's id
-			gas: 4500000,        // rinkeby has a lower block limit than mainnet
-			gasPrice: 10000000000
+		mainnet: {
+			provider: () => new HDWalletProvider(mnemonic, `${mainnetURL}/${rpcProviderKey}`),
+			network_id: 1,
+		},
+
+		goerli: {
+			provider: () => new HDWalletProvider(mnemonic, `${goerliURL}/${rpcProviderKey}`),
+			network_id: 5,
+		},
+
+		sepolia: {
+			provider: () => new HDWalletProvider(mnemonic, `${sepoliaURL}/${rpcProviderKey}`),
+			network_id: 11155111,
 		},
     // Another network with more advanced options...
     // advanced: {
