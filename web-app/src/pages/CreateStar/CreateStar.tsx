@@ -8,9 +8,11 @@ import { toCapitalizedName, toLowerTrim, stringToAsciiHex, toPaddedInteger, toPa
 import { isName, inLengthRange, isHour, isMinute, isSecond, isDecDegree } from "../../validation/string";
 import { txCall } from "../../blockchain/contracts";
 import { getErrorMessage } from "../../error";
+import { getConfirmationBlocks, getConfirmationDelaySeconds } from "../../env";
 
 import { store } from "../../state";
-import { openSuccessToast } from '../../state/toast';
+import { openInfoToast, openSuccessToast } from '../../state/toast';
+import { getStars } from "../../state/star";
 import { openModal } from "../../state/modal";
 
 import { MODAL_TYPES } from '../../constants';
@@ -131,9 +133,7 @@ export function CreateStar() {
 			isValidDecArcSeconds && decArcSeconds !== ""
 		);
 
-
 		if(isValidForm) {
-
 			const coordinates = (
 				toPaddedInteger(RAHours, 2) + 
 				toPaddedInteger(RAMinutes, 2) + 
@@ -154,8 +154,19 @@ export function CreateStar() {
 					from: store.getState().account.address
 				},
 				onTransactionHash: (transactionHash: string) => {
-					store.dispatch(openSuccessToast());
+					store.dispatch(openInfoToast("transaction sent: awaiting confirmations..."));
 					resetFields();
+				},
+				onConfirmation: (confirmation: number) => {
+					let confirmationBlocks = getConfirmationBlocks();
+					if(confirmation < confirmationBlocks) {
+						store.dispatch(openInfoToast(`confirmations: ${confirmation}/${confirmationBlocks}`));
+					} else if(confirmation === confirmationBlocks) {
+						setTimeout(() => {
+							store.dispatch(openSuccessToast("star created!"));
+							store.dispatch(getStars());
+						}, getConfirmationDelaySeconds()*1000);
+					}
 				},
 				onError: (error: Error) => {
 					Log.error({msg: getErrorMessage(error), description: "error creating star"})
