@@ -33,6 +33,7 @@
 @import './components/StarOptions/StarOptions.css';
 @import './components/StarCard/StarCard.css';
 @import './components/StarCoordinatesInput/StarCoordinatesInput.css';
+@import './components/StarNameInput/StarNameInput.css';
 
 @import './components/UI/Button/Button.css';
 @import './components/UI/TextInput/TextInput.css';
