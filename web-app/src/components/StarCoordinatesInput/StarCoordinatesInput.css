@@ -1,0 +1,8 @@
+.star-coordinate-input {
+	display: flex;
+	flex-direction: row;
+}
+
+.star-coordinate-input__column > * {
+	margin-bottom: 0.5rem;
+}

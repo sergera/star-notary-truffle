@@ -12,12 +12,3 @@
 .create-star__content > * {
 	margin-bottom: 2rem;
 }
-
-.create-star__coordinates {
-	display: flex;
-	flex-direction: row;
-}
-
-.create-star__input-group > * {
-	margin-bottom: 0.5rem;
-}
