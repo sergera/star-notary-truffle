@@ -32,7 +32,7 @@ export function Stars({
 				>
 					{displayList.map((star) => {
 						return (
-							<StarCard star={star} />
+							<StarCard star={star} key={star.tokenId} />
 						);
 					})}
 				</Page>
