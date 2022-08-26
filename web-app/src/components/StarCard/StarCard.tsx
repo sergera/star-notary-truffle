@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { Button } from '../UI/Button';
 import { ConnectedButtonWithKillswitch as ButtonWithKillswitch } from '../UI/ButtonWithKillswitch';
 
+import { toCapitalizedName } from '../../format/string';
+
 import { StarCardProps } from "./StarCard.types";
 import { RootState } from "../../state";
 
@@ -51,7 +53,7 @@ export function StarCard({
 				</div>
 				<div className="star-card__name">
 					<div className="star-card__name-value">
-						{star.name}
+						{toCapitalizedName(star.name)}
 					</div>
 					{owned &&
 						<ButtonWithKillswitch
