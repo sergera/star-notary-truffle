@@ -1,7 +1,5 @@
 import { getContracts } from "./contracts";
 
-import { getConfirmationBlocks } from "../../env";
-
 import { LooseObject } from "../../types";
 import { SimpleCallArgs, TxCallArgs, EstimateGasArgs } from './interact.types';
 
