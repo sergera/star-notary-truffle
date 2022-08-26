@@ -6,7 +6,7 @@ import { ConnectedButtonWithKillswitch as ButtonWithKillswitch } from "../../com
 
 import { Log } from "../../logger";
 import { stringToAsciiHex } from "../../format/string";
-import { txCall } from "../../blockchain/contracts";
+import { simpleCall, txCall } from "../../blockchain/contracts";
 import { getErrorMessage } from "../../error";
 import { getConfirmationBlocks, getConfirmationDelaySeconds } from "../../env";
 
@@ -48,6 +48,28 @@ export function CreateStar() {
 				starCoordinates.decArcMinutes +
 				starCoordinates.decArcSeconds
 			);
+
+			const existingStarCoordinatesId = await simpleCall({
+				contract: "StarNotary",
+				method: "coordinatesToTokenId",
+				args: [stringToAsciiHex(coordinates)]
+			});
+
+			if(existingStarCoordinatesId !== "0") {
+				store.dispatch(openModal(MODAL_TYPES.unavailableCoordinates));
+				return;
+			}
+
+			const existingStarNameId = await simpleCall({
+				contract: "StarNotary",
+				method: "starNameToTokenId",
+				args: [stringToAsciiHex(starName.value)]
+			});
+
+			if(existingStarNameId !== "0") {
+				store.dispatch(openModal(MODAL_TYPES.unavailableName));
+				return;
+			}
 
 			await txCall({
 				contract: "StarNotary",

@@ -19,6 +19,8 @@
 @import './components/ModalContainer/provider/ModalSelectChain/ModalSelectChain.css';
 @import './components/ModalContainer/provider/ModalPleaseConnect/ModalPleaseConnect.css';
 @import './components/ModalContainer/form/ModalIncompleteForm/ModalIncompleteForm.css';
+@import './components/ModalContainer/form/ModalUnavailableCoordinates/ModalUnavailableCoordinates.css';
+@import './components/ModalContainer/form/ModalUnavailableName/ModalUnavailableName.css';
 @import './components/NotificationContainer/NotificationContainer.css';
 @import './components/NotificationContainer/SuccessNotification/SuccessNotification.css';
 @import './components/NotificationContainer/InfoNotification/InfoNotification.css';

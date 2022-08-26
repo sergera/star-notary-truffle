@@ -5,6 +5,8 @@ import { ModalSelectChain } from './provider/ModalSelectChain';
 import { ModalChainNotAdded } from './provider/ModalChainNotAdded';
 import { ModalPleaseConnect } from './provider/ModalPleaseConnect/ModalPleaseConnect';
 import { ModalIncompleteForm } from './form/ModalIncompleteForm';
+import { ModalUnavailableCoordinates } from './form/ModalUnavailableCoordinates';
+import { ModalUnavailableName } from './form/ModalUnavailableName';
 
 import { MODAL_TYPES } from '../../constants';
 
@@ -18,4 +20,6 @@ export const MODAL_COMPONENTS: ModalComponentsMap = {
 	[MODAL_TYPES.chainNotAdded]: ModalChainNotAdded,
 	[MODAL_TYPES.pleaseConnect]: ModalPleaseConnect,
 	[MODAL_TYPES.incompleteForm]: ModalIncompleteForm,
+	[MODAL_TYPES.unavailableCoordinates]: ModalUnavailableCoordinates,
+	[MODAL_TYPES.unavailableName]: ModalUnavailableName,
 };
