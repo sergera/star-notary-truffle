@@ -1,8 +1,8 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 
-import { Landing } from './pages/Landing';
 import { ConnectedStars as Stars } from './pages/Stars';
-import  { CreateStar } from './pages/CreateStar';
+import { CreateStar } from './pages/CreateStar';
+import { About } from './pages/About';
 import { Components } from './pages/Components';
 import { ErrorNotFound } from './pages/ErrorNotFound';
 
@@ -29,9 +29,9 @@ export function App() {
 			<Nav />
 			<ErrorBoundary> 
 				<Routes>
-						<Route path="/" element={<Landing />} />
-						<Route path="/stars" element={<Stars />} />
+						<Route path="/" element={<Stars />} />
 						<Route path="/create" element={<CreateStar />} />
+						<Route path="/about" element={<About />} />
 						<Route path="/components" element={<Components />} />
 						<Route path="/404" element={<ErrorNotFound />} />
 						<Route path="*" element={<Navigate to={"/404"} />} />

@@ -1,0 +1,14 @@
+.closable-content {
+	display: flex;
+	flex-direction: column;
+	border-style: dashed;
+	width: 100%;
+	padding: 1rem;
+	border-color: var(--foreground);
+	border-width: 1rem;
+}
+
+.closable-content__close-button {
+	align-self: flex-end;
+	margin-bottom: 1rem;
+}

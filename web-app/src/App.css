@@ -1,6 +1,6 @@
-@import './pages/Landing/Landing.css';
 @import './pages/Stars/Stars.css';
 @import './pages/CreateStar/CreateStar.css';
+@import './pages/About/About.css';
 @import './pages/Components/Components.css';
 @import './pages/ErrorNotFound/ErrorNotFound.css';
 @import './pages/Error/Error.css';
@@ -31,6 +31,8 @@
 @import './components/ToastContainer/InfoToast/InfoToast.css';
 @import './components/ToastContainer/WarningToast/WarningToast.css';
 @import './components/ToastContainer/ErrorToast/ErrorToast.css';
+@import './components/ClosableContent/ClosableContent.css';
+@import './components/AppInfo/AppInfo.css';
 @import './components/Page/Page.css';
 @import './components/StarOptions/StarOptions.css';
 @import './components/StarCard/StarCard.css';

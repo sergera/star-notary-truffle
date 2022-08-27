@@ -1,15 +1,14 @@
-.stars {
+.about {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 }
 
-.stars__content {
+.about__content {
 	padding: 1rem;
-	width: 100%;
 }
 
-.stars__content > * {
+.about__content > * {
 	margin-bottom: 1rem;
 }

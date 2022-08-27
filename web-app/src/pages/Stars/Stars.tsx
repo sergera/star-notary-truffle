@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { ConnectedStarOptions as StarOptions } from '../../components/StarOptions';
 import { ConnectedPage as Page } from '../../components/Page';
 import { ConnectedStarCard as StarCard } from '../../components/StarCard';
+import { AppInfo } from "../../components/AppInfo";
+import { ClosableContent } from "../../components/ClosableContent";
 
 import { getStars} from '../../state/star';
 
@@ -22,6 +24,9 @@ export function Stars({
   return (
     <div className="stars">
 			<div className="stars__content">
+				<ClosableContent>
+					<AppInfo />
+				</ClosableContent>
 				<StarOptions
 					handleSelect={getStars}
 				/>
