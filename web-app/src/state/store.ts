@@ -7,6 +7,7 @@ import { providerReducer } from './blockchain/wallet/provider';
 import { chainReducer } from './blockchain/wallet/chain';
 import { accountReducer } from './blockchain/wallet/account';
 import { starReducer } from './star';
+import { userReducer } from './user';
 import { modalReducer } from './modal';
 import { notificationReducer } from './notification';
 import { toastReducer } from './toast';
@@ -18,6 +19,7 @@ export const combinedReducer = combineReducers({
 	chain: chainReducer,
 	account: accountReducer,
 	star: starReducer,
+	user: userReducer,
 	modal: modalReducer,
 	notification: notificationReducer,
 	toast: toastReducer,

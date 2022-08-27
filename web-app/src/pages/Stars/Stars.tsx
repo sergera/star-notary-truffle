@@ -7,7 +7,8 @@ import { ConnectedStarCard as StarCard } from '../../components/StarCard';
 import { AppInfo } from "../../components/AppInfo";
 import { ClosableContent } from "../../components/ClosableContent";
 
-import { getStars} from '../../state/star';
+import { getStars } from '../../state/star';
+import { closeWelcome } from '../../state/user';
 
 import { StarsProps } from './Stars.types';
 import { RootState, Dispatch } from '../../state';
@@ -15,6 +16,8 @@ import { RootState, Dispatch } from '../../state';
 export function Stars({
 	getStars,
 	displayList,
+	showWelcome,
+	closeWelcome,
 }: StarsProps) {
 
 	useEffect(() => {
@@ -24,9 +27,13 @@ export function Stars({
   return (
     <div className="stars">
 			<div className="stars__content">
-				<ClosableContent>
-					<AppInfo />
-				</ClosableContent>
+				{showWelcome &&
+					<ClosableContent
+						handleClose={closeWelcome}
+					>
+						<AppInfo />
+					</ClosableContent>
+				}
 				<StarOptions
 					handleSelect={getStars}
 				/>
@@ -49,12 +56,14 @@ export function Stars({
 const mapStateToProps = (state: RootState) => {
 	return {
 		displayList: state.star.displayList,
+		showWelcome: state.user.showWelcome,
 	};
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
 	return {
     getStars: () => dispatch(getStars()),
+		closeWelcome: () => dispatch(closeWelcome()),
   };
 };
 
