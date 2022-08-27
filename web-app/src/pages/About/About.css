@@ -12,3 +12,11 @@
 .about__content > * {
 	margin-bottom: 1rem;
 }
+
+.about__team {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	width: 100%;
+	padding: 1rem;
+}

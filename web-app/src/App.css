@@ -33,6 +33,7 @@
 @import './components/ToastContainer/ErrorToast/ErrorToast.css';
 @import './components/ClosableContent/ClosableContent.css';
 @import './components/AppInfo/AppInfo.css';
+@import './components/TeamPortrait/TeamPortrait.css';
 @import './components/Page/Page.css';
 @import './components/StarOptions/StarOptions.css';
 @import './components/StarCard/StarCard.css';
