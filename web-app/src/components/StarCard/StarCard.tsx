@@ -14,7 +14,7 @@ export function StarCard({
 }: StarCardProps) {
 
 	let forSale = star.isForSale;
-	let owned = star.owner.toLowerCase() === userWallet.toLowerCase();
+	let owned = star.owner.address.toLowerCase() === userWallet.toLowerCase();
 
 	const getHeaderGridColumns = () => {
 		let columns = "1fr"

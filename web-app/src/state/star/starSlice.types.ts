@@ -13,7 +13,10 @@ export interface Star {
 			arcSeconds: string;
 		};
 	};
-	owner: string;
+	owner: {
+		address: string;
+		id: string;
+	};
 	isForSale: boolean;
 	priceInEther: string;
 	date: string;
@@ -24,7 +27,10 @@ export interface BackendStar {
 	token_id: string;
 	name: string;
 	coordinates: string;
-	owner: string;
+	wallet: {
+		address: string;
+		id: string;
+	};
 	is_for_sale: boolean;
 	price: string;
 	date: string;

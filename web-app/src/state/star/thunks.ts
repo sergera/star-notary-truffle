@@ -74,7 +74,10 @@ const convertStarList = (backendStars: BackendStar[]): Star[] => {
 					arcSeconds: star.coordinates.substring(14),
 				},
 			},
-			owner: star.owner,
+			owner: {
+				address: star.wallet.address,
+				id: star.wallet.id,
+			},
 			priceInEther: formatPriceString(star.price),
 			isForSale: star.is_for_sale,
 			date: star.date.substring(0,10),
