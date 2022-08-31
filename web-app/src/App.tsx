@@ -3,7 +3,6 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { ConnectedStars as Stars } from './pages/Stars';
 import { CreateStar } from './pages/CreateStar';
 import { About } from './pages/About';
-import { Components } from './pages/Components';
 import { ErrorNotFound } from './pages/ErrorNotFound';
 
 import { Header } from './components/Header';
@@ -34,7 +33,6 @@ export function App() {
 						<Route path={ROUTER_PATHS.stars} element={<Stars />} />
 						<Route path={ROUTER_PATHS.create} element={<CreateStar />} />
 						<Route path={ROUTER_PATHS.about} element={<About />} />
-						<Route path={ROUTER_PATHS.components} element={<Components />} />
 						<Route path={ROUTER_PATHS.notFound} element={<ErrorNotFound />} />
 						<Route path={"*"} element={<Navigate to={ROUTER_PATHS.notFound} />} />
 				</Routes>

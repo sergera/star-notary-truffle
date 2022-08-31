@@ -3,5 +3,4 @@ export const ROUTER_PATHS = {
 	create: "/create",
 	about: "/about",
 	notFound: "/404",
-	components: "/components",
 };

@@ -50,18 +50,6 @@ export function Nav() {
 					About
 				</Link>
 			</div>
-			<div className="nav__link">
-				<Link 
-					to={ROUTER_PATHS.components}
-					style={{
-						color: 'inherit',
-						textDecoration: routeActive(ROUTER_PATHS.components) ? 'underline' : 'inherit',
-						padding: '0.5rem'
-					}}
-				>
-					Components
-				</Link>
-			</div>
 		</nav>
   );
 };
