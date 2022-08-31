@@ -5,10 +5,8 @@ import { StarNameInput, emptyStarName } from "../../components/StarNameInput";
 import { ConnectedButtonWithKillswitch as ButtonWithKillswitch } from "../../components/UI/ButtonWithKillswitch";
 
 import { Log } from "../../logger";
-import { stringToAsciiHex } from "../../format/string";
-import { simpleCall, txCall } from "../../blockchain/contracts";
-import { getErrorMessage } from "../../error";
-import { getConfirmationBlocks, getConfirmationDelaySeconds } from "../../env";
+import { createStar } from "../../blockchain/tokenTransaction";
+import { coordinatesInUse, nameInUse } from "../../blockchain/tokenSimpleCall";
 
 import { store } from "../../state";
 import { openInfoToast, openSuccessToast } from '../../state/toast';
@@ -49,56 +47,67 @@ export function CreateStar() {
 				starCoordinates.decArcSeconds
 			);
 
-			const existingStarCoordinatesId = await simpleCall({
-				contract: "StarNotary",
-				method: "coordinatesToTokenId",
-				args: [stringToAsciiHex(coordinates)]
+			let couldCallContract = true;
+
+			const areCoordinatesInUse = await coordinatesInUse({
+				coordinates: coordinates,
+			}).catch(() => {
+				couldCallContract = false;
 			});
 
-			if(existingStarCoordinatesId !== "0") {
+			if(!couldCallContract) {
+				store.dispatch(openModal(MODAL_TYPES.contractCallFailed));
+				return;
+			}
+
+			if(areCoordinatesInUse) {
 				store.dispatch(openModal(MODAL_TYPES.unavailableCoordinates));
 				return;
 			}
 
-			const existingStarNameId = await simpleCall({
-				contract: "StarNotary",
-				method: "starNameToTokenId",
-				args: [stringToAsciiHex(starName.value)]
-			});
+			const isNameInUse = await nameInUse({
+				name: starName.value,
+			}).catch(() => {
+				couldCallContract = false;
+			})
 
-			if(existingStarNameId !== "0") {
+			if(!couldCallContract) {
+				store.dispatch(openModal(MODAL_TYPES.contractCallFailed));
+				return;
+			}
+
+			if(isNameInUse) {
 				store.dispatch(openModal(MODAL_TYPES.unavailableName));
 				return;
 			}
 
-			await txCall({
-				contract: "StarNotary",
-				method: "createStar",
-				args: [
-					stringToAsciiHex(starName.value),
-					stringToAsciiHex(coordinates)
-				],
-				options: {
-					from: store.getState().account.address
-				},
-				onTransactionHash: (transactionHash: string) => {
+			await createStar({
+				name: starName.value,
+				coordinates: coordinates,
+				owner: store.getState().account.address,
+				onTxHash: () => {
 					store.dispatch(openInfoToast("transaction sent: awaiting confirmations..."));
+				},
+				onFirstConfirmation: (currentConfirmation, maxConfirmations) => {
+					store.dispatch(openInfoToast("transaction mined!"));
+					store.dispatch(openInfoToast(`confirmations: ${currentConfirmation}/${maxConfirmations}`));
 					resetFields();
 				},
-				onConfirmation: (confirmation: number) => {
-					let confirmationBlocks = getConfirmationBlocks();
-					if(confirmation < confirmationBlocks) {
-						store.dispatch(openInfoToast(`confirmations: ${confirmation}/${confirmationBlocks}`));
-					} else if(confirmation === confirmationBlocks) {
-						setTimeout(() => {
-							store.dispatch(openSuccessToast("star created!"));
-							store.dispatch(getStars());
-						}, getConfirmationDelaySeconds()*1000);
-					}
+				onIntermediateConfirmation: (currentConfirmation, maxConfirmations) => {
+					store.dispatch(openInfoToast(`confirmations: ${currentConfirmation}/${maxConfirmations}`));
 				},
-				onError: (error: Error) => {
-					Log.error({msg: getErrorMessage(error), description: "error creating star"})
-				}
+				onFinalConfirmation: () => {
+					store.dispatch(openSuccessToast("star created!"));
+					store.dispatch(getStars());
+				},
+				onTxError: (msg: string) => {
+					Log.error({msg: msg, description: "transaction rejected creating star"})
+					store.dispatch(openModal(MODAL_TYPES.txRejected));
+				},
+				onError: (msg: string) => {
+					Log.error({msg: msg, description: "error creating star"})
+					store.dispatch(openModal(MODAL_TYPES.contractCallFailed));
+				},
 			});
 		} else {
 			store.dispatch(openModal(MODAL_TYPES.incompleteForm));
