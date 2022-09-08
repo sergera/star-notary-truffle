@@ -9,7 +9,7 @@ import { createStar } from "../../blockchain/tokenTransaction";
 import { coordinatesInUse, nameInUse } from "../../blockchain/tokenSimpleCall";
 
 import { store } from "../../state";
-import { openInfoToast, openSuccessToast } from '../../state/toast';
+import { openInfoToast, openSuccessToast, openErrorToast } from '../../state/toast';
 import { getStars } from "../../state/star";
 import { openModal } from "../../state/modal";
 
@@ -102,7 +102,7 @@ export function CreateStar() {
 				},
 				onTxError: (msg: string) => {
 					Log.error({msg: msg, description: "transaction rejected creating star"})
-					store.dispatch(openModal(MODAL_TYPES.txRejected));
+					store.dispatch(openErrorToast("error processing create transaction"));
 				},
 				onError: (msg: string) => {
 					Log.error({msg: msg, description: "error creating star"})

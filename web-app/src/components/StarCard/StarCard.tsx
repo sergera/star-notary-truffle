@@ -1,9 +1,24 @@
+import { useState } from 'react';
 import { connect } from 'react-redux';
 
 import { Button } from '../UI/Button';
 import { ConnectedButtonWithKillswitch as ButtonWithKillswitch } from '../UI/ButtonWithKillswitch';
+import { TextInputWithRules } from '../UI/TextInputWithRules';
 
+import { tokenOwned, tokenForSale, nameInUse } from '../../blockchain/tokenSimpleCall';
+import { buyStar, removeFromSale, putForSale, changeName } from '../../blockchain/tokenTransaction';
 import { toCapitalizedName } from '../../format/string';
+import { Log } from '../../logger';
+import { isName, inLengthRange, isEther } from '../../validation/string';
+import { ethToWei } from '../../format/eth/unit';
+import { toLowerTrim } from '../../format/string';
+
+import { store } from '../../state';
+import { getStars } from '../../state/star';
+import { openModal } from '../../state/modal';
+import { openInfoToast, openSuccessToast, openErrorToast } from '../../state/toast';
+
+import { MODAL_TYPES } from '../../constants';
 
 import { StarCardProps } from "./StarCard.types";
 import { RootState } from "../../state";
@@ -14,7 +29,14 @@ export function StarCard({
 }: StarCardProps) {
 
 	let forSale = star.isForSale;
-	let owned = star.owner.address.toLowerCase() === userWallet.toLowerCase();
+	let owned = star.owner.address.toLowerCase() === userWallet;
+
+	let [openEditPrice, setOpenEditPrice] = useState(false);
+	let [price, setPrice] = useState("");
+	let [isValidPrice, setIsValidPrice] = useState(true);
+	let [openEditName, setOpenEditName] = useState(false);
+	let [name, setName] = useState("");
+	let [isValidName, setIsValidName] = useState(true);
 
 	const getHeaderGridColumns = () => {
 		let columns = "1fr"
@@ -26,6 +48,299 @@ export function StarCard({
 		}
 		return columns;
 	};
+
+	const submitBuy = async () => {
+		let couldCallContract = true;
+
+		const isTokenOwned = await tokenOwned({
+			address: userWallet,
+			tokenId: star.tokenId,
+		}).catch(() => {
+			couldCallContract = false;
+		});
+
+		if(!couldCallContract) {
+			store.dispatch(openModal(MODAL_TYPES.contractCallFailed));
+			return;
+		}
+
+		if(isTokenOwned) {
+			store.dispatch(openModal(MODAL_TYPES.tokenAlreadyOwned));
+			return;
+		}
+
+		const isTokenForSale = await tokenForSale({
+			tokenId: star.tokenId,
+		}).catch(() => {
+			couldCallContract = false;
+		});
+
+		if(!couldCallContract) {
+			store.dispatch(openModal(MODAL_TYPES.contractCallFailed));
+			return;
+		}
+
+		if(!isTokenForSale) {
+			store.dispatch(openModal(MODAL_TYPES.tokenNotForSale));
+			return;
+		}
+
+		await buyStar({
+			tokenId: star.tokenId,
+			owner: userWallet,
+			onTxHash: () => {
+				store.dispatch(openInfoToast("transaction sent: awaiting confirmations..."));
+			},
+			onFirstConfirmation: (currentConfirmation, maxConfirmations) => {
+				store.dispatch(openInfoToast("transaction mined!"));
+				store.dispatch(openInfoToast(`confirmations: ${currentConfirmation}/${maxConfirmations}`));
+			},
+			onIntermediateConfirmation: (currentConfirmation, maxConfirmations) => {
+				store.dispatch(openInfoToast(`confirmations: ${currentConfirmation}/${maxConfirmations}`));
+			},
+			onFinalConfirmation: () => {
+				store.dispatch(openSuccessToast("star bought!"));
+				store.dispatch(getStars());
+			},
+			onTxError: (msg: string) => {
+				Log.error({msg: msg, description: "transaction rejected buying star"})
+				store.dispatch(openErrorToast("error processing purchase transaction"));
+			},
+			onError: (msg: string) => {
+				Log.error({msg: msg, description: "error buying star"})
+				store.dispatch(openModal(MODAL_TYPES.contractCallFailed));
+			},
+		});
+	}
+
+	const submitRemoveFromSale = async () => {
+		let couldCallContract = true;
+
+		const isTokenOwned = await tokenOwned({
+			address: userWallet,
+			tokenId: star.tokenId,
+		}).catch(() => {
+			couldCallContract = false;
+		});
+
+		if(!couldCallContract) {
+			store.dispatch(openModal(MODAL_TYPES.contractCallFailed));
+			return;
+		}
+
+		if(!isTokenOwned) {
+			store.dispatch(openModal(MODAL_TYPES.tokenNotOwned));
+			return;
+		}
+
+		const isTokenForSale = await tokenForSale({
+			tokenId: star.tokenId,
+		}).catch(() => {
+			couldCallContract = false;
+		});
+
+		if(!couldCallContract) {
+			store.dispatch(openModal(MODAL_TYPES.contractCallFailed));
+			return;
+		}
+
+		if(!isTokenForSale) {
+			store.dispatch(openModal(MODAL_TYPES.tokenNotForSale));
+			return;
+		}
+
+		await removeFromSale({
+			tokenId: star.tokenId,
+			owner: userWallet,
+			onTxHash: () => {
+				store.dispatch(openInfoToast("transaction sent: awaiting confirmations..."));
+			},
+			onFirstConfirmation: (currentConfirmation, maxConfirmations) => {
+				store.dispatch(openInfoToast("transaction mined!"));
+				store.dispatch(openInfoToast(`confirmations: ${currentConfirmation}/${maxConfirmations}`));
+			},
+			onIntermediateConfirmation: (currentConfirmation, maxConfirmations) => {
+				store.dispatch(openInfoToast(`confirmations: ${currentConfirmation}/${maxConfirmations}`));
+			},
+			onFinalConfirmation: () => {
+				store.dispatch(openSuccessToast("star removed from sale!"));
+				store.dispatch(getStars());
+			},
+			onTxError: (msg: string) => {
+				Log.error({msg: msg, description: "transaction rejected removing star from sale"})
+				store.dispatch(openErrorToast("error processing remove from sale transaction"));
+			},
+			onError: (msg: string) => {
+				Log.error({msg: msg, description: "error removing star from sale"})
+				store.dispatch(openModal(MODAL_TYPES.contractCallFailed));
+			},
+		});
+	}
+
+	const attemptPutForSale = async () => {
+		let couldCallContract = true;
+
+		const isTokenForSale = await tokenForSale({
+			tokenId: star.tokenId,
+		}).catch(() => {
+			couldCallContract = false;
+		});
+
+		if(!couldCallContract) {
+			store.dispatch(openModal(MODAL_TYPES.contractCallFailed));
+			return;
+		}
+
+		if(isTokenForSale) {
+			store.dispatch(openModal(MODAL_TYPES.tokenAlreadyForSale));
+			return;
+		}
+
+		editPrice();
+	}
+
+	const editPrice = () => {
+		setOpenEditPrice(true);
+	}
+
+	const getPrice = (price: string) => {
+		setIsValidPrice(isEther(price));
+		setPrice(price.replace(",","."));
+	}
+
+	const submitPrice = async () => {
+		if(price && isValidPrice) {
+			let couldCallContract = true;
+
+			const isTokenOwned = await tokenOwned({
+				address: userWallet,
+				tokenId: star.tokenId,
+			}).catch(() => {
+				couldCallContract = false;
+			});
+	
+			if(!couldCallContract) {
+				store.dispatch(openModal(MODAL_TYPES.contractCallFailed));
+				return;
+			}
+	
+			if(!isTokenOwned) {
+				store.dispatch(openModal(MODAL_TYPES.tokenNotOwned));
+				return;
+			}
+
+			await putForSale({
+				tokenId: star.tokenId,
+				price: ethToWei(price),
+				owner: userWallet,
+				onTxHash: () => {
+					store.dispatch(openInfoToast("transaction sent: awaiting confirmations..."));
+					setOpenEditPrice(false);
+				},
+				onFirstConfirmation: (currentConfirmation, maxConfirmations) => {
+					store.dispatch(openInfoToast("transaction mined!"));
+					store.dispatch(openInfoToast(`confirmations: ${currentConfirmation}/${maxConfirmations}`));
+				},
+				onIntermediateConfirmation: (currentConfirmation, maxConfirmations) => {
+					store.dispatch(openInfoToast(`confirmations: ${currentConfirmation}/${maxConfirmations}`));
+				},
+				onFinalConfirmation: () => {
+					store.dispatch(openSuccessToast("star price set!"));
+					store.dispatch(getStars());
+				},
+				onTxError: (msg: string) => {
+					Log.error({msg: msg, description: "transaction rejected setting star price"})
+					store.dispatch(openErrorToast("error processing set price transaction"));
+				},
+				onError: (msg: string) => {
+					Log.error({msg: msg, description: "error setting star price"})
+					store.dispatch(openModal(MODAL_TYPES.contractCallFailed));
+				},
+			});
+		} else {
+			store.dispatch(openModal(MODAL_TYPES.incompleteForm));
+		}
+	}
+
+	const editName = () => {
+		setOpenEditName(true);
+	}
+
+	const getName = (name: string) => {
+		setIsValidName(isName(name) && inLengthRange(name,4,32));
+		setName(name);
+
+	}
+
+	const submitName = async () => {
+		if(name && isValidName) {
+			let couldCallContract = true;
+
+			const isTokenOwned = await tokenOwned({
+				address: userWallet,
+				tokenId: star.tokenId,
+			}).catch(() => {
+				couldCallContract = false;
+			});
+	
+			if(!couldCallContract) {
+				store.dispatch(openModal(MODAL_TYPES.contractCallFailed));
+				return;
+			}
+	
+			if(!isTokenOwned) {
+				store.dispatch(openModal(MODAL_TYPES.tokenNotOwned));
+				return;
+			}
+
+			const isNameInUse = await nameInUse({
+				name: toLowerTrim(name),
+			}).catch(() => {
+				couldCallContract = false;
+			});
+	
+			if(!couldCallContract) {
+				store.dispatch(openModal(MODAL_TYPES.contractCallFailed));
+				return;
+			}
+	
+			if(isNameInUse) {
+				store.dispatch(openModal(MODAL_TYPES.unavailableName));
+				return;
+			}
+
+			await changeName({
+				tokenId: star.tokenId,
+				newName: toLowerTrim(name),
+				owner: userWallet,
+				onTxHash: () => {
+					store.dispatch(openInfoToast("transaction sent: awaiting confirmations..."));
+					setOpenEditName(false);
+				},
+				onFirstConfirmation: (currentConfirmation, maxConfirmations) => {
+					store.dispatch(openInfoToast("transaction mined!"));
+					store.dispatch(openInfoToast(`confirmations: ${currentConfirmation}/${maxConfirmations}`));
+				},
+				onIntermediateConfirmation: (currentConfirmation, maxConfirmations) => {
+					store.dispatch(openInfoToast(`confirmations: ${currentConfirmation}/${maxConfirmations}`));
+				},
+				onFinalConfirmation: () => {
+					store.dispatch(openSuccessToast("star name set!"));
+					store.dispatch(getStars());
+				},
+				onTxError: (msg: string) => {
+					Log.error({msg: msg, description: "transaction rejected setting star name"})
+					store.dispatch(openErrorToast("error processing set name transaction"));
+				},
+				onError: (msg: string) => {
+					Log.error({msg: msg, description: "error setting star name"})
+					store.dispatch(openModal(MODAL_TYPES.contractCallFailed));
+				},
+			});
+		} else {
+			store.dispatch(openModal(MODAL_TYPES.incompleteForm));
+		}
+	}
 
 	return (
 		<div className="star-card">
@@ -48,21 +363,48 @@ export function StarCard({
 				/>
 			</div>
 			<div className="star-card__body">
-			<div className="star-card__id">
+				<div className="star-card__id">
 					{"#" + star.tokenId}
 				</div>
 				<div className="star-card__name">
 					<div className="star-card__name-value">
 						{toCapitalizedName(star.name)}
 					</div>
-					{owned &&
+					{owned && !openEditName &&
 						<ButtonWithKillswitch
 							name="Edit Name"
-							handleClick={() => {console.log("TODO: implement edit name")}}
+							handleClick={editName}
 							styleClass={"btn-primary-outline"}
 						/>
 					}
 				</div>
+				{openEditName &&
+					<div className="star-card__edit">
+						<TextInputWithRules 
+							handleChange={getName}
+							value={name}
+							isValid={isValidName}
+							isRequired={true}
+							placeholder={"enter new name"}
+							rules={[
+								"between 4 and 32 letters",
+								"non-consecutive spaces in between",
+							]}
+						/>
+						<div className="star-card__edit-buttons">
+							<ButtonWithKillswitch
+								styleClass="btn-secondary-outline" 
+								name={"Set Name"} 
+								handleClick={submitName}
+							/>
+							<Button
+								styleClass="btn-warning-outline" 
+								name={"Cancel"} 
+								handleClick={() => setOpenEditName(false)}
+							/>
+						</div>
+					</div>
+				}
 				<div className="star-card__coordinates">
 					<div className="star-card__coordinates--RA">
 						{
@@ -89,13 +431,41 @@ export function StarCard({
 						<div className="star-card__price-value">
 							{star.priceInEther + " ETH"}
 						</div>
-						{owned && 
+						{owned && !openEditPrice &&
 							<ButtonWithKillswitch
 								name="Edit Price"
-								handleClick={() => {console.log("TODO: implement edit price")}}
+								handleClick={editPrice}
 								styleClass={"btn-primary-outline"}
 							/>
 						}
+					</div>
+				}
+				{openEditPrice && 
+					<div className="star-card__edit">
+						<TextInputWithRules 
+							handleChange={getPrice}
+							value={price}
+							isValid={isValidPrice}
+							isRequired={true}
+							placeholder={"enter ether amount"}
+							rules={[
+								"no insignificant zeroes",
+								"max 18 decimal digits",
+								"max 78 whole digits",
+							]}
+						/>
+						<div className="star-card__edit-buttons">
+							<ButtonWithKillswitch
+								styleClass="btn-secondary-outline" 
+								name={"Set Price"} 
+								handleClick={submitPrice}
+							/>
+							<Button
+								styleClass="btn-warning-outline"
+								name={"Cancel"} 
+								handleClick={() => setOpenEditPrice(false)}
+							/>
+						</div>
 					</div>
 				}
 			</div>
@@ -103,21 +473,21 @@ export function StarCard({
 				{forSale && owned &&
 					<ButtonWithKillswitch
 						name="Remove From Sale"
-						handleClick={() => {console.log("TODO: implement remove from sale")}}
+						handleClick={submitRemoveFromSale}
 						styleClass={"btn-warning-outline star-card__footer-button"}
 					/>
 				}
-				{!forSale && owned &&
+				{!forSale && owned && !openEditPrice &&
 					<ButtonWithKillswitch
 						name="Put For Sale"
-						handleClick={() => {console.log("TODO: implement put for sale")}}
+						handleClick={attemptPutForSale}
 						styleClass={"btn-special-outline star-card__footer-button"}
 					/>
 				}
 				{forSale && !owned &&
 					<ButtonWithKillswitch
 						name="Buy"
-						handleClick={() => {console.log("TODO: implement buy")}}
+						handleClick={submitBuy}
 						styleClass={"btn-secondary-outline star-card__footer-button"}
 					/>
 				}

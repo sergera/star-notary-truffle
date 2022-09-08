@@ -113,3 +113,14 @@
 	border-top-left-radius: 0px !important;
 	border-bottom-left-radius: 20px !important;	
 }
+
+.star-card__edit {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+}
+
+.star-card__edit-buttons > * {
+	margin-right: 1rem;
+}
