@@ -452,7 +452,7 @@ export function StarCard({
 								"non-zero amount",
 								"no insignificant zeroes",
 								"max 18 decimal digits",
-								"max 78 whole digits",
+								"max 59 whole digits",
 							]}
 						/>
 						<div className="star-card__edit-buttons">
