@@ -204,7 +204,7 @@ export function StarCard({
 	}
 
 	const getPrice = (price: string) => {
-		setIsValidPrice(isEther(price));
+		setIsValidPrice(isEther(price) && Number(price) > 0);
 		setPrice(price.replace(",","."));
 	}
 
@@ -449,6 +449,7 @@ export function StarCard({
 							isRequired={true}
 							placeholder={"enter ether amount"}
 							rules={[
+								"non-zero amount",
 								"no insignificant zeroes",
 								"max 18 decimal digits",
 								"max 78 whole digits",
