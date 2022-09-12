@@ -485,7 +485,7 @@ export function StarCard({
 						styleClass={"btn-special-outline star-card__footer-button"}
 					/>
 				}
-				{forSale && !owned &&
+				{userWallet && forSale && !owned &&
 					<ButtonWithKillswitch
 						name="Buy"
 						handleClick={submitBuy}
