@@ -10,7 +10,7 @@ export function TeamPortrait({
 					<div className="team-portrait__name">
 						<p>{name}</p>
 					</div>
-					<img className="team-portrait__portrait" src={portraitURL}/>
+					<img alt="portrait" className="team-portrait__portrait" src={portraitURL}/>
 					<div className="team-portrait__description">
 						{description.map((paragraph) => {
 							return (
