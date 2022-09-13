@@ -121,6 +121,10 @@
 	align-items: flex-start;
 }
 
+.star-card__edit > * {
+	margin-bottom: 1rem;
+}
+
 .star-card__edit-buttons > * {
 	margin-right: 1rem;
 }
