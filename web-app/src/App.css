@@ -26,6 +26,7 @@
 @import './components/ModalContainer/contract/ModalTokenAlreadyOwned/ModalTokenAlreadyOwned.css';
 @import './components/ModalContainer/contract/ModalTokenNotForSale/ModalTokenNotForSale.css';
 @import './components/ModalContainer/contract/ModalTokenNotOwned/ModalTokenNotOwned.css';
+@import './components/ModalContainer/contract/ModalTokenIdenticalPrice/ModalTokenIdenticalPrice.css';
 @import './components/NotificationContainer/NotificationContainer.css';
 @import './components/NotificationContainer/SuccessNotification/SuccessNotification.css';
 @import './components/NotificationContainer/InfoNotification/InfoNotification.css';

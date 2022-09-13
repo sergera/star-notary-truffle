@@ -14,4 +14,5 @@ export const MODAL_TYPES = {
 	tokenAlreadyOwned: "TOKEN_ALREADY_OWNED",
 	tokenNotForSale: "TOKEN_NOT_FOR_SALE",
 	tokenAlreadyForSale: "TOKEN_ALREADY_FOR_SALE",
+	tokenIdenticalPrice: "TOKEN_IDENTICAL_PRICE",
 };

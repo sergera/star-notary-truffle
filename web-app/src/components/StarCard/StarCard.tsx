@@ -5,12 +5,12 @@ import { Button } from '../UI/Button';
 import { ConnectedButtonWithKillswitch as ButtonWithKillswitch } from '../UI/ButtonWithKillswitch';
 import { TextInputWithRules } from '../UI/TextInputWithRules';
 
-import { tokenOwned, tokenForSale, nameInUse } from '../../blockchain/tokenSimpleCall';
+import { tokenOwned, tokenForSale, nameInUse, tokenPrice } from '../../blockchain/tokenSimpleCall';
 import { buyStar, removeFromSale, putForSale, changeName } from '../../blockchain/tokenTransaction';
 import { toCapitalizedName } from '../../format/string';
 import { Log } from '../../logger';
 import { isName, inLengthRange, isEther } from '../../validation/string';
-import { ethToWei } from '../../format/eth/unit';
+import { ethToWei, weiToEth } from '../../format/eth/unit';
 import { toLowerTrim } from '../../format/string';
 
 import { store } from '../../state';
@@ -199,6 +199,28 @@ export function StarCard({
 		editPrice();
 	}
 
+	const attemptChangePrice = async () => {
+		let couldCallContract = true;
+
+		const contractPrice = await tokenPrice({
+			tokenId: star.tokenId,
+		}).catch(() => {
+			couldCallContract = false;
+		});
+
+		if(!couldCallContract) {
+			store.dispatch(openModal(MODAL_TYPES.contractCallFailed));
+			return;
+		}
+
+		if(weiToEth(contractPrice).toString() === price) {
+			store.dispatch(openModal(MODAL_TYPES.tokenIdenticalPrice));
+			return;
+		}
+
+		submitPrice();
+	}
+
 	const editPrice = () => {
 		setOpenEditPrice(true);
 	}
@@ -209,7 +231,7 @@ export function StarCard({
 	}
 
 	const getPrice = (price: string) => {
-		setIsValidPrice(isEther(price) && Number(price) > 0);
+		setIsValidPrice(isEther(price) && price !== "0" && price !== "0.0");
 		setPrice(price.replace(",","."));
 	}
 
@@ -473,7 +495,7 @@ export function StarCard({
 							<ButtonWithKillswitch
 								styleClass="btn-secondary-outline" 
 								name={"Set Price"} 
-								handleClick={submitPrice}
+								handleClick={attemptChangePrice}
 							/>
 							<Button
 								styleClass="btn-warning-outline"

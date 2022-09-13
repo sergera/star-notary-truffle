@@ -13,6 +13,7 @@ import { ModalTokenNotOwned } from './contract/ModalTokenNotOwned';
 import { ModalTokenAlreadyOwned } from './contract/ModalTokenAlreadyOwned';
 import { ModalTokenNotForSale } from './contract/ModalTokenNotForSale';
 import { ModalTokenAlreadyForSale } from './contract/ModalTokenAlreadyForSale';
+import { ModalTokenIdenticalPrice } from './contract/ModalTokenIdenticalPrice';
 
 import { MODAL_TYPES } from '../../constants';
 
@@ -34,4 +35,5 @@ export const MODAL_COMPONENTS: ModalComponentsMap = {
 	[MODAL_TYPES.tokenAlreadyOwned]: ModalTokenAlreadyOwned,
 	[MODAL_TYPES.tokenNotForSale]: ModalTokenNotForSale,
 	[MODAL_TYPES.tokenAlreadyForSale]: ModalTokenAlreadyForSale,
+	[MODAL_TYPES.tokenIdenticalPrice]: ModalTokenIdenticalPrice,
 };
