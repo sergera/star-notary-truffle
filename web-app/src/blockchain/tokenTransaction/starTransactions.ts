@@ -202,7 +202,7 @@ export const putForSale = async ({
 		method: CONTRACT_FUNCTIONS[CONTRACTS.starNotary].tx.putForSale,
 		args: [
 			tokenId,
-			stringToAsciiHex(price),
+			price,
 		],
 		options: {
 			from: owner,
