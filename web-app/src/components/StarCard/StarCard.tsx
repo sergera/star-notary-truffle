@@ -257,6 +257,7 @@ export function StarCard({
 			}
 
 			setOpenEditPrice(false);
+			resetPrice();
 
 			await putForSale({
 				tokenId: star.tokenId,
@@ -264,7 +265,6 @@ export function StarCard({
 				owner: userWallet,
 				onTxHash: () => {
 					store.dispatch(openInfoToast("transaction sent: awaiting confirmations..."));
-					resetPrice();
 				},
 				onFirstConfirmation: (currentConfirmation, maxConfirmations) => {
 					store.dispatch(openInfoToast("transaction mined!"));
@@ -344,6 +344,7 @@ export function StarCard({
 			}
 
 			setOpenEditName(false);
+			resetName();
 
 			await changeName({
 				tokenId: star.tokenId,
@@ -351,7 +352,6 @@ export function StarCard({
 				owner: userWallet,
 				onTxHash: () => {
 					store.dispatch(openInfoToast("transaction sent: awaiting confirmations..."));
-					resetName();
 				},
 				onFirstConfirmation: (currentConfirmation, maxConfirmations) => {
 					store.dispatch(openInfoToast("transaction mined!"));

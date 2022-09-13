@@ -81,6 +81,8 @@ export function CreateStar() {
 				return;
 			}
 
+			resetFields();
+
 			await createStar({
 				name: starName.value,
 				coordinates: coordinates,
@@ -91,7 +93,6 @@ export function CreateStar() {
 				onFirstConfirmation: (currentConfirmation, maxConfirmations) => {
 					store.dispatch(openInfoToast("transaction mined!"));
 					store.dispatch(openInfoToast(`confirmations: ${currentConfirmation}/${maxConfirmations}`));
-					resetFields();
 				},
 				onIntermediateConfirmation: (currentConfirmation, maxConfirmations) => {
 					store.dispatch(openInfoToast(`confirmations: ${currentConfirmation}/${maxConfirmations}`));
