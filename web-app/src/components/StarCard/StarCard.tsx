@@ -203,6 +203,11 @@ export function StarCard({
 		setOpenEditPrice(true);
 	}
 
+	const resetPrice = () => {
+		setPrice("");
+		setIsValidPrice(true);
+	}
+
 	const getPrice = (price: string) => {
 		setIsValidPrice(isEther(price) && Number(price) > 0);
 		setPrice(price.replace(",","."));
@@ -235,6 +240,7 @@ export function StarCard({
 				owner: userWallet,
 				onTxHash: () => {
 					store.dispatch(openInfoToast("transaction sent: awaiting confirmations..."));
+					resetPrice();
 					setOpenEditPrice(false);
 				},
 				onFirstConfirmation: (currentConfirmation, maxConfirmations) => {
@@ -264,6 +270,11 @@ export function StarCard({
 
 	const editName = () => {
 		setOpenEditName(true);
+	}
+
+	const resetName = () => {
+		setName("");
+		setIsValidName(true);
 	}
 
 	const getName = (name: string) => {
@@ -315,6 +326,7 @@ export function StarCard({
 				owner: userWallet,
 				onTxHash: () => {
 					store.dispatch(openInfoToast("transaction sent: awaiting confirmations..."));
+					resetName();
 					setOpenEditName(false);
 				},
 				onFirstConfirmation: (currentConfirmation, maxConfirmations) => {
