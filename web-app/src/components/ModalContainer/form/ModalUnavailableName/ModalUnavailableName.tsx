@@ -7,7 +7,7 @@ export function ModalUnavailableName({
 }:ModalUnavailableNameProps) {
 
 	const title = "Name Unavailable";
-	const content = "This name is currently being used by another star";
+	const content = "This name is currently in use";
 
   return (
 		<div className="modal">

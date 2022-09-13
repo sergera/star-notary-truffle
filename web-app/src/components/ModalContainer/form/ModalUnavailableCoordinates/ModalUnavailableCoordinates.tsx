@@ -7,7 +7,7 @@ export function ModalUnavailableCoordinates({
 }:ModalUnavailableCoordinatesProps) {
 
 	const title = "Coordinates Unavailable";
-	const content = "A star with these coordinates is already registered";
+	const content = "These coordinates are already registered";
 
   return (
 		<div className="modal">
