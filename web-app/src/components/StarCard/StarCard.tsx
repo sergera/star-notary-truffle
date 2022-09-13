@@ -234,6 +234,8 @@ export function StarCard({
 				return;
 			}
 
+			setOpenEditPrice(false);
+
 			await putForSale({
 				tokenId: star.tokenId,
 				price: ethToWei(price),
@@ -241,7 +243,6 @@ export function StarCard({
 				onTxHash: () => {
 					store.dispatch(openInfoToast("transaction sent: awaiting confirmations..."));
 					resetPrice();
-					setOpenEditPrice(false);
 				},
 				onFirstConfirmation: (currentConfirmation, maxConfirmations) => {
 					store.dispatch(openInfoToast("transaction mined!"));
@@ -320,6 +321,8 @@ export function StarCard({
 				return;
 			}
 
+			setOpenEditName(false);
+
 			await changeName({
 				tokenId: star.tokenId,
 				newName: toLowerTrim(name),
@@ -327,7 +330,6 @@ export function StarCard({
 				onTxHash: () => {
 					store.dispatch(openInfoToast("transaction sent: awaiting confirmations..."));
 					resetName();
-					setOpenEditName(false);
 				},
 				onFirstConfirmation: (currentConfirmation, maxConfirmations) => {
 					store.dispatch(openInfoToast("transaction mined!"));
