@@ -142,8 +142,8 @@ contract StarNotary is ERC721 {
 	function isStarName(bytes calldata name) private pure returns (bool){
 		/* max 32 characters */
 		if(name.length > 32) return false;
-		/* min 4 characters */
-		if(name.length < 4) return false;
+		/* min 2 characters */
+		if(name.length < 2) return false;
 
 		/* no leading spaces */
 		if(isSpace(name[0])) return false;
