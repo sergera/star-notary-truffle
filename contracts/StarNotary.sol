@@ -89,11 +89,11 @@ contract StarNotary is ERC721 {
 		emit RemoveFromSale(msg.sender, _tokenId);
 	}
 
-	function buyStar(uint256 _tokenId) external payable {
+	function purchaseStar(uint256 _tokenId) external payable {
 		require(tokenIdToSalePrice[_tokenId] > 0, "the star is not up for sale");
 		uint256 starCost = tokenIdToSalePrice[_tokenId];
 		address ownerAddress = ownerOf(_tokenId);
-		require(msg.value >= starCost, "not enough ether to buy this star");
+		require(msg.value >= starCost, "not enough ether to purchase this star");
 
 		/* call transfer function with this contract as msg.sender */
 		this.transferFrom(ownerAddress, msg.sender, _tokenId);

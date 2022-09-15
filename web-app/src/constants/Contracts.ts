@@ -8,7 +8,7 @@ export const CONTRACT_FUNCTIONS = {
 			create: "createStar",
 			putForSale: "putStarUpForSale",
 			removeFromSale: "removeStarFromSale",
-			buy: "buyStar",
+			purchase: "purchaseStar",
 			changeName: "changeStarName",
 		},
 		simple: {

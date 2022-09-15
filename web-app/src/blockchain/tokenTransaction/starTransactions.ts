@@ -69,7 +69,7 @@ export const createStar = async ({
 	});
 };
 
-export const buyStar = async ({
+export const purchaseStar = async ({
 	tokenId,
 	owner,
 	value,
@@ -85,7 +85,7 @@ export const buyStar = async ({
 }:BuyStarArgs) => {
 	await txCall({
 		contract: CONTRACTS.starNotary,
-		method: CONTRACT_FUNCTIONS[CONTRACTS.starNotary].tx.buy,
+		method: CONTRACT_FUNCTIONS[CONTRACTS.starNotary].tx.purchase,
 		args: [
 			tokenId,
 		],

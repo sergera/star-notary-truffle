@@ -6,7 +6,7 @@ import { ConnectedButtonWithKillswitch as ButtonWithKillswitch } from '../UI/But
 import { TextInputWithRules } from '../UI/TextInputWithRules';
 
 import { tokenOwned, tokenForSale, nameInUse, tokenPrice } from '../../blockchain/tokenSimpleCall';
-import { buyStar, removeFromSale, putForSale, changeName } from '../../blockchain/tokenTransaction';
+import { purchaseStar, removeFromSale, putForSale, changeName } from '../../blockchain/tokenTransaction';
 import { toCapitalizedName } from '../../format/string';
 import { Log } from '../../logger';
 import { isName, inLengthRange, isEther } from '../../validation/string';
@@ -49,7 +49,7 @@ export function StarCard({
 		return columns;
 	};
 
-	const submitBuy = async () => {
+	const submitPurchase = async () => {
 		let couldCallContract = true;
 
 		const isTokenOwned = await tokenOwned({
@@ -101,7 +101,7 @@ export function StarCard({
 			return;
 		}
 
-		await buyStar({
+		await purchaseStar({
 			tokenId: star.tokenId,
 			owner: userWallet,
 			value: ethToWei(star.priceInEther),
@@ -120,11 +120,11 @@ export function StarCard({
 				store.dispatch(getStars());
 			},
 			onTxError: (msg: string) => {
-				Log.error({msg: msg, description: "transaction rejected buying star"});
+				Log.error({msg: msg, description: "transaction rejected purchasing star"});
 				store.dispatch(openErrorToast("error processing purchase transaction"));
 			},
 			onError: (msg: string) => {
-				Log.error({msg: msg, description: "error buying star"});
+				Log.error({msg: msg, description: "error purchasing star"});
 				store.dispatch(openErrorToast("contract call failed"));
 			},
 		});
@@ -540,8 +540,8 @@ export function StarCard({
 				}
 				{userWallet && forSale && !owned &&
 					<ButtonWithKillswitch
-						name="Buy"
-						handleClick={submitBuy}
+						name="Purchase"
+						handleClick={submitPurchase}
 						styleClass={"btn-secondary-outline star-card__footer-button"}
 					/>
 				}
