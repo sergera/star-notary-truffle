@@ -38,7 +38,7 @@ export function StarNameInput({
 	}
 
 	const validateStarName = (value: string) => {
-		setIsValid(isName(value) && inLengthRange(value,4,32));
+		setIsValid(isName(value) && inLengthRange(value,2,32));
 	}
 
 	const getStarName = (value: string) => {
@@ -57,7 +57,7 @@ export function StarNameInput({
 			value={value}
 			isValid={isValid}
 			rules={[
-				"between 4 and 32 letters",
+				"between 2 and 32 letters",
 				"non-consecutive spaces in between"
 			]}
 			isRequired={isRequired}

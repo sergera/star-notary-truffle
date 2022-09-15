@@ -318,7 +318,7 @@ export function StarCard({
 	}
 
 	const getName = (name: string) => {
-		setIsValidName(isName(name) && inLengthRange(name,4,32));
+		setIsValidName(isName(name) && inLengthRange(name,2,32));
 		setName(name);
 
 	}
@@ -440,7 +440,7 @@ export function StarCard({
 							isRequired={true}
 							placeholder={"enter new name"}
 							rules={[
-								"between 4 and 32 letters",
+								"between 2 and 32 letters",
 								"non-consecutive spaces in between",
 							]}
 						/>
