@@ -72,6 +72,7 @@ export const createStar = async ({
 export const buyStar = async ({
 	tokenId,
 	owner,
+	value,
 	onSending=()=>{},
 	onSent=()=>{},
 	onTxHash=()=>{},
@@ -90,6 +91,7 @@ export const buyStar = async ({
 		],
 		options: {
 			from: owner,
+			value: value,
 		},
 		onSending: () => {
 			onSending();

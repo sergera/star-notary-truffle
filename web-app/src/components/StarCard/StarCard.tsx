@@ -104,6 +104,7 @@ export function StarCard({
 		await buyStar({
 			tokenId: star.tokenId,
 			owner: userWallet,
+			value: ethToWei(star.priceInEther),
 			onTxHash: () => {
 				store.dispatch(openInfoToast("transaction sent: awaiting confirmations..."));
 			},

@@ -18,6 +18,7 @@ export interface CreateStarArgs {
 export interface BuyStarArgs {
 	tokenId: string;
 	owner: string;
+	value: string;
 	onSending?: Function;
 	onSent?: Function;
 	onTxHash?(txHash: string): void;
