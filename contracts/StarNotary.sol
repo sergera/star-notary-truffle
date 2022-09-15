@@ -38,15 +38,15 @@ contract StarNotary is ERC721 {
 	}
 
 	function createStar(bytes calldata _name, bytes calldata _coordinates) external {
-		require(isStarName(_name), "Star name invalid");
-		require(starNameToTokenId[_name] == 0, "Star name currently in use");
-		require(isHour(bytes2(_coordinates[0:2])), "Right ascension hours invalid");
-		require(isMinute(bytes2(_coordinates[2:4])), "Right ascension minutes invalid");
-		require(isSecond(bytes5(_coordinates[4:9])), "Right ascension seconds invalid");
-		require(isDegree(bytes3(_coordinates[9:12])), "Declination degrees invalid");
-		require(isMinute(bytes2(_coordinates[12:14])), "Declination arc minutes invalid");
-		require(isSecond(bytes5(_coordinates[14:19])), "Declination arc seconds invalid");
-		require(coordinatesToTokenId[bytes19(_coordinates)] == 0, "Star coordinate already exists");
+		require(isStarName(_name), "star name invalid");
+		require(starNameToTokenId[_name] == 0, "star name currently in use");
+		require(isHour(bytes2(_coordinates[0:2])), "right ascension hours invalid");
+		require(isMinute(bytes2(_coordinates[2:4])), "right ascension minutes invalid");
+		require(isSecond(bytes5(_coordinates[4:9])), "right ascension seconds invalid");
+		require(isDegree(bytes3(_coordinates[9:12])), "declination degrees invalid");
+		require(isMinute(bytes2(_coordinates[12:14])), "declination arc minutes invalid");
+		require(isSecond(bytes5(_coordinates[14:19])), "declination arc seconds invalid");
+		require(coordinatesToTokenId[bytes19(_coordinates)] == 0, "star coordinate already exists");
 
 		Star memory newStar = Star(
 			_name,
@@ -89,7 +89,7 @@ contract StarNotary is ERC721 {
 	 */
 
 	function putStarUpForSale(uint256 _tokenId, uint256 _price) external {
-		require(ownerOf(_tokenId) == msg.sender, "You can't sell a Star you don't own");
+		require(ownerOf(_tokenId) == msg.sender, "you can't put for sale a star you don't own");
 
 		/* approve this contract to transfer the token */
 		approve(address(this), _tokenId);
@@ -100,7 +100,7 @@ contract StarNotary is ERC721 {
 	}
 
 	function removeStarFromSale(uint256 _tokenId) external {
-		require(ownerOf(_tokenId) == msg.sender, "You can't remove from sale a Star you don't own");
+		require(ownerOf(_tokenId) == msg.sender, "you can't remove from sale a star you don't own");
 
 		approve(address(0), _tokenId);
 		delete tokenIdToSalePrice[_tokenId];
@@ -109,10 +109,10 @@ contract StarNotary is ERC721 {
 	}
 
 	function buyStar(uint256 _tokenId) external payable {
-		require(tokenIdToSalePrice[_tokenId] > 0, "The Star is not up for sale");
+		require(tokenIdToSalePrice[_tokenId] > 0, "the star is not up for sale");
 		uint256 starCost = tokenIdToSalePrice[_tokenId];
 		address ownerAddress = ownerOf(_tokenId);
-		require(msg.value >= starCost, "Not enough Ether to buy this Star");
+		require(msg.value >= starCost, "not enough ether to buy this star");
 
 		/* call transfer function with this contract as msg.sender */
 		this.transferFrom(ownerAddress, msg.sender, _tokenId);
@@ -127,9 +127,9 @@ contract StarNotary is ERC721 {
 	}
 
 	function changeStarName(uint256 _tokenId, bytes calldata _name) external {
-		require(ownerOf(_tokenId) == msg.sender, "You can't edit a Star you don't own");
-		require(isStarName(_name), "Star name invalid");
-		require(starNameToTokenId[_name] == 0, "Star name currently in use");
+		require(ownerOf(_tokenId) == msg.sender, "you can't edit a star you don't own");
+		require(isStarName(_name), "star name invalid");
+		require(starNameToTokenId[_name] == 0, "star name currently in use");
 
 		delete starNameToTokenId[tokenIdToStar[_tokenId].name];
 		tokenIdToStar[_tokenId].name = _name;
