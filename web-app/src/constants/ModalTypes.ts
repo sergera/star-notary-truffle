@@ -15,4 +15,5 @@ export const MODAL_TYPES = {
 	tokenNotForSale: "TOKEN_NOT_FOR_SALE",
 	tokenAlreadyForSale: "TOKEN_ALREADY_FOR_SALE",
 	tokenIdenticalPrice: "TOKEN_IDENTICAL_PRICE",
+	tokenDifferentPrice: "TOKEN_DIFFERENT_PRICE",
 };

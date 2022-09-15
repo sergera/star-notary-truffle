@@ -85,6 +85,22 @@ export function StarCard({
 			return;
 		}
 
+		const contractPrice = await tokenPrice({
+			tokenId: star.tokenId,
+		}).catch(() => {
+			couldCallContract = false;
+		});
+
+		if(!couldCallContract) {
+			store.dispatch(openModal(MODAL_TYPES.contractCallFailed));
+			return;
+		}
+
+		if(weiToEth(contractPrice).toString() !== star.priceInEther) {
+			store.dispatch(openModal(MODAL_TYPES.tokenDifferentPrice));
+			return;
+		}
+
 		await buyStar({
 			tokenId: star.tokenId,
 			owner: userWallet,
