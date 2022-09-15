@@ -69,25 +69,6 @@ contract StarNotary is ERC721 {
 		emit Created(msg.sender, tokenId, bytes19(_coordinates), _name);
 	}
 
-	/***
-		The NFT contract and the "market" contract are 1 in this case
-
-		This means that there is a problem with the transfer approval on sale
-
-		Since the buyer is not the owner at the time of buying, the seller would then
-		have to approve the buyer sepparately, before the buyer calls the "buyStar" function
-
-		This not only would be an unfeasible interface, since the seller would have no way
-		of knowing when the another person is going to buy the star, but would also make the
-		seller pay for fees (approve is a transaction function call) in the act of selling
-
-		So I've decided to approve the contract itself when putting the star for sale
-
-		This way, when the seller puts the star for sale, he/she approves the contract to 
-		make the transfer, and when a buyer buys the star the contract itself transfers the NFT
-	
-	 */
-
 	function putStarUpForSale(uint256 _tokenId, uint256 _price) external {
 		require(ownerOf(_tokenId) == msg.sender, "you can't put for sale a star you don't own");
 
