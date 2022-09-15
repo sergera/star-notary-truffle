@@ -27,11 +27,11 @@ contract StarNotary is ERC721 {
 	/* borrowing ideas from enumerable extension for automatic tokenId attribution */
 	uint256 private _allTokens;
 
-	event Created(address owner, uint256 tokenId, bytes19 coordinates, bytes name);
-	event ChangedName(address owner, uint256 tokenId, bytes newName);
+	event Create(address owner, uint256 tokenId, bytes19 coordinates, bytes name);
+	event ChangeName(address owner, uint256 tokenId, bytes newName);
 	event PutForSale(address owner, uint256 tokenId, uint256 priceInWei);
-	event RemovedFromSale(address owner, uint256 tokenId);
-	event Sold(address newOwner, uint256 tokenId);
+	event RemoveFromSale(address owner, uint256 tokenId);
+	event Purchase(address newOwner, uint256 tokenId);
 
 	function totalSupply() public view returns (uint256) {
 		return _allTokens;
@@ -66,7 +66,7 @@ contract StarNotary is ERC721 {
 		tokenIdToStar[tokenId] = newStar;
 		_mint(msg.sender, tokenId);
 
-		emit Created(msg.sender, tokenId, bytes19(_coordinates), _name);
+		emit Create(msg.sender, tokenId, bytes19(_coordinates), _name);
 	}
 
 	function putStarUpForSale(uint256 _tokenId, uint256 _price) external {
@@ -86,7 +86,7 @@ contract StarNotary is ERC721 {
 		approve(address(0), _tokenId);
 		delete tokenIdToSalePrice[_tokenId];
 
-		emit RemovedFromSale(msg.sender, _tokenId);
+		emit RemoveFromSale(msg.sender, _tokenId);
 	}
 
 	function buyStar(uint256 _tokenId) external payable {
@@ -104,7 +104,8 @@ contract StarNotary is ERC721 {
 		}
 
 		delete tokenIdToSalePrice[_tokenId];
-		emit Sold(msg.sender, _tokenId);
+		
+		emit Purchase(msg.sender, _tokenId);
 	}
 
 	function changeStarName(uint256 _tokenId, bytes calldata _name) external {
@@ -116,7 +117,7 @@ contract StarNotary is ERC721 {
 		tokenIdToStar[_tokenId].name = _name;
 		starNameToTokenId[_name] = _tokenId;
 
-		emit ChangedName(msg.sender, _tokenId, _name);
+		emit ChangeName(msg.sender, _tokenId, _name);
 	}
 
 	function isSpace(bytes1 space) private pure returns (bool) {
