@@ -102,12 +102,12 @@ export function CreateStar() {
 					store.dispatch(getStars());
 				},
 				onTxError: (msg: string) => {
-					Log.error({msg: msg, description: "transaction rejected creating star"})
+					Log.error({msg: msg, description: "transaction rejected creating star"});
 					store.dispatch(openErrorToast("error processing create transaction"));
 				},
 				onError: (msg: string) => {
-					Log.error({msg: msg, description: "error creating star"})
-					store.dispatch(openModal(MODAL_TYPES.contractCallFailed));
+					Log.error({msg: msg, description: "error creating star"});
+					store.dispatch(openErrorToast("contract call failed"));
 				},
 			});
 		} else {

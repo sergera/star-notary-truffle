@@ -103,12 +103,12 @@ export function StarCard({
 				store.dispatch(getStars());
 			},
 			onTxError: (msg: string) => {
-				Log.error({msg: msg, description: "transaction rejected buying star"})
+				Log.error({msg: msg, description: "transaction rejected buying star"});
 				store.dispatch(openErrorToast("error processing purchase transaction"));
 			},
 			onError: (msg: string) => {
-				Log.error({msg: msg, description: "error buying star"})
-				store.dispatch(openModal(MODAL_TYPES.contractCallFailed));
+				Log.error({msg: msg, description: "error buying star"});
+				store.dispatch(openErrorToast("contract call failed"));
 			},
 		});
 	}
@@ -167,12 +167,12 @@ export function StarCard({
 				store.dispatch(getStars());
 			},
 			onTxError: (msg: string) => {
-				Log.error({msg: msg, description: "transaction rejected removing star from sale"})
+				Log.error({msg: msg, description: "transaction rejected removing star from sale"});
 				store.dispatch(openErrorToast("error processing remove from sale transaction"));
 			},
 			onError: (msg: string) => {
-				Log.error({msg: msg, description: "error removing star from sale"})
-				store.dispatch(openModal(MODAL_TYPES.contractCallFailed));
+				Log.error({msg: msg, description: "error removing star from sale"});
+				store.dispatch(openErrorToast("contract call failed"));
 			},
 		});
 	}
@@ -278,12 +278,12 @@ export function StarCard({
 					store.dispatch(getStars());
 				},
 				onTxError: (msg: string) => {
-					Log.error({msg: msg, description: "transaction rejected setting star price"})
+					Log.error({msg: msg, description: "transaction rejected setting star price"});
 					store.dispatch(openErrorToast("error processing set price transaction"));
 				},
 				onError: (msg: string) => {
-					Log.error({msg: msg, description: "error setting star price"})
-					store.dispatch(openModal(MODAL_TYPES.contractCallFailed));
+					Log.error({msg: msg, description: "error setting star price"});
+					store.dispatch(openErrorToast("contract call failed"));
 				},
 			});
 		} else {
@@ -365,12 +365,12 @@ export function StarCard({
 					store.dispatch(getStars());
 				},
 				onTxError: (msg: string) => {
-					Log.error({msg: msg, description: "transaction rejected setting star name"})
+					Log.error({msg: msg, description: "transaction rejected setting star name"});
 					store.dispatch(openErrorToast("error processing set name transaction"));
 				},
 				onError: (msg: string) => {
-					Log.error({msg: msg, description: "error setting star name"})
-					store.dispatch(openModal(MODAL_TYPES.contractCallFailed));
+					Log.error({msg: msg, description: "error setting star name"});
+					store.dispatch(openErrorToast("contract call failed"));
 				},
 			});
 		} else {
