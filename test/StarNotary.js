@@ -48,7 +48,7 @@ contract("StarNotary", (accs) => {
 	owner = accounts[0];
 
 
-	it("emits Created event on star creation", async() => {
+	it("emits Create event on star creation", async() => {
 		let instance = await StarNotary.deployed();
 
 		let user1 = accounts[1];
@@ -59,7 +59,7 @@ contract("StarNotary", (accs) => {
 
 		let pastEvents = await instance.getPastEvents("allEvents", { fromBlock: 1 });
 		const lastEvent = pastEvents[pastEvents.length-1];
-		assert.equal(lastEvent.event, "Created")
+		assert.equal(lastEvent.event, "Create")
 		let lastEventReturnValues = lastEvent.returnValues;
 		assert.equal(lastEventReturnValues.owner, user1);
 		assert.equal(lastEventReturnValues.tokenId, starFirstId);
@@ -250,7 +250,7 @@ contract("StarNotary", (accs) => {
 	accounts = accs;
 	owner = accounts[0];
 
-	it("emits RemovedFromSale event when removed star from sale", async() => {
+	it("emits RemoveFromSale event when removed star from sale", async() => {
 		let instance = await StarNotary.deployed();
 	
 		let user1 = accounts[1];
@@ -271,7 +271,7 @@ contract("StarNotary", (accs) => {
 
 		let pastEvents = await instance.getPastEvents("allEvents", { fromBlock: 1 });
 		const lastEvent = pastEvents[pastEvents.length-1];
-		assert.equal(lastEvent.event, "RemovedFromSale")
+		assert.equal(lastEvent.event, "RemoveFromSale")
 		let lastEventReturnValues = lastEvent.returnValues;
 		assert.equal(lastEventReturnValues.owner, user1);
 		assert.equal(lastEventReturnValues.tokenId, starFirstId);
@@ -320,7 +320,7 @@ contract("StarNotary", (accs) => {
 		await instance.createStar(starNameHex, coordinatesHex, {from: user1});
 		await instance.putStarUpForSale(starFirstId, starPrice, {from: user1});
 		let user1BalanceBeforeSale = await web3.eth.getBalance(user1);
-		await instance.buyStar(starFirstId, {from: user2, value: moreThanPrice});
+		await instance.purchaseStar(starFirstId, {from: user2, value: moreThanPrice});
 		let user1BalanceAfterSale = await web3.eth.getBalance(user1);
 		let balanceBeforePlusPrice = Number(user1BalanceBeforeSale) + Number(starPrice);
 		let balanceAfter = Number(user1BalanceAfterSale);
@@ -332,7 +332,7 @@ contract("StarNotary", (accs) => {
 	accounts = accs;
 	owner = accounts[0];
 
-	it("emits Sold event after the sale", async() => {
+	it("emits Purchase event after the sale", async() => {
 		let instance = await StarNotary.deployed();
 	
 		let user1 = accounts[1];
@@ -343,7 +343,7 @@ contract("StarNotary", (accs) => {
 		await instance.createStar(starNameHex, coordinatesHex, {from: user1});
 		await instance.putStarUpForSale(starFirstId, starPrice, {from: user1});
 		let user1BalanceBeforeSale = await web3.eth.getBalance(user1);
-		await instance.buyStar(starFirstId, {from: user2, value: moreThanPrice});
+		await instance.purchaseStar(starFirstId, {from: user2, value: moreThanPrice});
 		let user1BalanceAfterSale = await web3.eth.getBalance(user1);
 		let balanceBeforePlusPrice = Number(user1BalanceBeforeSale) + Number(starPrice);
 		let balanceAfter = Number(user1BalanceAfterSale);
@@ -351,7 +351,7 @@ contract("StarNotary", (accs) => {
 
 		let pastEvents = await instance.getPastEvents("allEvents", { fromBlock: 1 });
 		const lastEvent = pastEvents[pastEvents.length-1];
-		assert.equal(lastEvent.event, "Sold")
+		assert.equal(lastEvent.event, "Purchase")
 		let lastEventReturnValues = lastEvent.returnValues;
 		assert.equal(lastEventReturnValues.newOwner, user2);
 		assert.equal(lastEventReturnValues.tokenId, starFirstId);
@@ -374,7 +374,7 @@ contract("StarNotary", (accs) => {
 		await instance.putStarUpForSale(starFirstId, starPrice, {from: user1});
 		let approvedAddress = await instance.getApproved.call(starFirstId);
 		assert.equal(approvedAddress, instance.address);
-		await instance.buyStar(starFirstId, {from: user2, value: moreThanPrice});
+		await instance.purchaseStar(starFirstId, {from: user2, value: moreThanPrice});
 		approvedAddress = await instance.getApproved.call(starFirstId);
 		assert.equal(approvedAddress, 0);
 	});
@@ -396,7 +396,7 @@ contract("StarNotary", (accs) => {
 		await instance.putStarUpForSale(starFirstId, starPrice, {from: user1});
 		let approvedAddress = await instance.getApproved.call(starFirstId);
 		assert.equal(approvedAddress, instance.address);
-		await instance.buyStar(starFirstId, {from: user2, value: moreThanPrice});
+		await instance.purchaseStar(starFirstId, {from: user2, value: moreThanPrice});
 		salePriceAfterSale = await instance.tokenIdToSalePrice.call(starFirstId);
 		assert.equal(salePriceAfterSale, 0);
 	});
@@ -406,7 +406,7 @@ contract("StarNotary", (accs) => {
 	accounts = accs;
 	owner = accounts[0];
 
-	it("lets user buy star, if it is put up for sale", async() => {
+	it("lets user purchase star, if it is put up for sale", async() => {
 		let instance = await StarNotary.deployed();
 	
 		let user1 = accounts[1];
@@ -416,7 +416,7 @@ contract("StarNotary", (accs) => {
 	
 		await instance.createStar(starNameHex, coordinatesHex, {from: user1});
 		await instance.putStarUpForSale(starFirstId, starPrice, {from: user1});
-		await instance.buyStar(starFirstId, {from: user2,value: moreThanPrice});
+		await instance.purchaseStar(starFirstId, {from: user2,value: moreThanPrice});
 		let currentOwner = await instance.ownerOf.call(starFirstId);
 		assert.equal(currentOwner, user2);
 	});
@@ -426,7 +426,7 @@ contract("StarNotary", (accs) => {
 	accounts = accs;
 	owner = accounts[0];
 
-	it("doesn't let user buy star, if it is not put up for sale", async() => {
+	it("doesn't let user purchase star, if it is not put up for sale", async() => {
 		let instance = await StarNotary.deployed();
 	
 		let user1 = accounts[1];
@@ -434,7 +434,7 @@ contract("StarNotary", (accs) => {
 		let imaginaryPrice = web3.utils.toWei(".05", "ether");
 	
 		await instance.createStar(starNameHex, coordinatesHex, {from: user1});
-		let tx = instance.buyStar(starFirstId, {from: user2, value: imaginaryPrice});
+		let tx = instance.purchaseStar(starFirstId, {from: user2, value: imaginaryPrice});
 		expectThrow(tx);
 		let currentOwner = await instance.ownerOf.call(starFirstId);
 		assert.equal(currentOwner, user1);
@@ -445,7 +445,7 @@ contract("StarNotary", (accs) => {
 	accounts = accs;
 	owner = accounts[0];
 
-	it("doesn't let user buy star, if user doesn't has less ether than price", async() => {
+	it("doesn't let user purchase star, if user doesn't has less ether than price", async() => {
 		let instance = await StarNotary.deployed();
 	
 		let user1 = accounts[1];
@@ -455,7 +455,7 @@ contract("StarNotary", (accs) => {
 	
 		await instance.createStar(starNameHex, coordinatesHex, {from: user1});
 		await instance.putStarUpForSale(starFirstId, starPrice, {from: user1});
-		let tx = instance.buyStar(starFirstId, {from: user2, value: lessThanPrice});
+		let tx = instance.purchaseStar(starFirstId, {from: user2, value: lessThanPrice});
 		expectThrow(tx);
 		let currentOwner = await instance.ownerOf.call(starFirstId);
 		assert.equal(currentOwner, user1);
@@ -466,7 +466,7 @@ contract("StarNotary", (accs) => {
 	accounts = accs;
 	owner = accounts[0];
 
-	it("lets user buy star with tx value exactly equal to sale price", async() => {
+	it("lets user purchase star with tx value exactly equal to sale price", async() => {
 		let instance = await StarNotary.deployed();
 	
 		let user1 = accounts[1];
@@ -476,7 +476,7 @@ contract("StarNotary", (accs) => {
 		await instance.createStar(starNameHex, coordinatesHex, {from: user1});
 		await instance.putStarUpForSale(starFirstId, starPrice, {from: user1});
 		let user1BalanceBeforeSale = await web3.eth.getBalance(user1);
-		await instance.buyStar(starFirstId, {from: user2, value: starPrice});
+		await instance.purchaseStar(starFirstId, {from: user2, value: starPrice});
 		let user1BalanceAfterSale = await web3.eth.getBalance(user1);
 		let balanceBeforePlusPrice = Number(user1BalanceBeforeSale) + Number(starPrice);
 		let balanceAfter = Number(user1BalanceAfterSale);
@@ -488,7 +488,7 @@ contract("StarNotary", (accs) => {
 	accounts = accs;
 	owner = accounts[0];
 
-	it("user buys star and receives correct change", async() => {
+	it("user purchases star and receives correct change", async() => {
 		let instance = await StarNotary.deployed();
 	
 		let user1 = accounts[1];
@@ -500,7 +500,7 @@ contract("StarNotary", (accs) => {
 		await instance.putStarUpForSale(starFirstId, starPrice, {from: user1});
 	
 		let user2BalanceBeforePurchase = web3.utils.toBN(await web3.eth.getBalance(user2));
-		let txInfo = await instance.buyStar(starFirstId, {from: user2, value: moreThanPrice});
+		let txInfo = await instance.purchaseStar(starFirstId, {from: user2, value: moreThanPrice});
 		let user2BalanceAfterPurchase = web3.utils.toBN(await web3.eth.getBalance(user2));
 	
 		// Important! Note that because these are big numbers (more than Number.MAX_SAFE_INTEGER), we
@@ -546,7 +546,7 @@ contract("StarNotary", (accs) => {
 	accounts = accs;
 	owner = accounts[0];
 
-	it("emits ChangedName event on name changed", async() => {
+	it("emits ChangeName event on name changed", async() => {
 		let instance = await StarNotary.deployed();
 
 		let user1 = accounts[1];
@@ -562,7 +562,7 @@ contract("StarNotary", (accs) => {
 
 		let pastEvents = await instance.getPastEvents("allEvents", { fromBlock: 1 });
 		const lastEvent = pastEvents[pastEvents.length-1];
-		assert.equal(lastEvent.event, "ChangedName")
+		assert.equal(lastEvent.event, "ChangeName")
 		let lastEventReturnValues = lastEvent.returnValues;
 		assert.equal(lastEventReturnValues.owner, user1);
 		assert.equal(lastEventReturnValues.tokenId, starFirstId);
