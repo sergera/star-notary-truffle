@@ -24,7 +24,7 @@ class Metamask implements IInjectedProviderApi {
 	};
 
 	acquireProvider() {
-		let provider = null;
+		let provider: any = null;
 
 		const {ethereum} = window;
 		if(ethereum) {
@@ -35,6 +35,15 @@ class Metamask implements IInjectedProviderApi {
 				/* if there are multiple providers, window.ethereum could a mixed injected object */
 				provider = providers.find((provider: any) => provider.isMetaMask);
 			}
+
+			setTimeout(() => {
+				if(provider !== null && document.readyState === "complete" && ethereum._state.initialized !== true) {
+					/* TODO: remove this when metamask bug is resolved */
+					/* workaround for bug https://github.com/MetaMask/metamask-extension/issues/13465 */
+					let href = window.location.href
+					window.location.href = href;
+				}
+			}, 1000);
 		}
 		
 		this.provider = provider;
