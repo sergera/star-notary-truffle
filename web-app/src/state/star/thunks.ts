@@ -4,7 +4,7 @@ import { backend } from '../../apis';
 
 import { STAR_SORT_TYPES } from '../../constants';
 
-import { Star, BackendStar, StarRange } from './starSlice.types';
+import { Star, BackendStar, StarRange, EventAction } from './starSlice.types';
 import { RootState } from '..';
 
 export const getStars = createAsyncThunk<
@@ -13,19 +13,19 @@ export const getStars = createAsyncThunk<
 	{ state: RootState }
 >(
 	"star/getStars",
-	async(_,thunkAPI) => {
+	async (_, thunkAPI) => {
 		let { getState, dispatch } = thunkAPI;
 		const starState = getState().star;
 		const range = getRange(starState.page, starState.pageSize);
 		switch (starState.sort) {
 			case STAR_SORT_TYPES.newest:
-				dispatch(getStarRange({start: range.start, end: range.end, oldestFirst: false}));
+				dispatch(getStarRange({ start: range.start, end: range.end, oldestFirst: false }));
 				break;
 			case STAR_SORT_TYPES.oldest:
-				dispatch(getStarRange({start: range.start, end: range.end, oldestFirst: true}));
+				dispatch(getStarRange({ start: range.start, end: range.end, oldestFirst: true }));
 				break;
 			default:
-				dispatch(getStarRange({start: range.start, end: range.end, oldestFirst: false}));
+				dispatch(getStarRange({ start: range.start, end: range.end, oldestFirst: false }));
 		}
 	}
 );
@@ -36,7 +36,7 @@ export const getStarRange = createAsyncThunk<
 	{ state: RootState }
 >(
 	"star/getRange",
-	async(range,_) => {
+	async (range, _) => {
 		let res = await backend.get('/star-range', {
 			params: {
 				start: range.start,
@@ -50,10 +50,10 @@ export const getStarRange = createAsyncThunk<
 );
 
 const getRange = (page: number, pageSize: number): StarRange => {
-	if(page === 1) {
-		return {start: 1, end: pageSize + 1};
+	if (page === 1) {
+		return { start: 1, end: pageSize + 1 };
 	} else {
-		return {start: (pageSize * (page - 1)) + 1, end: ((pageSize * (page - 1)) + 1) + pageSize};
+		return { start: (pageSize * (page - 1)) + 1, end: ((pageSize * (page - 1)) + 1) + pageSize };
 	}
 };
 
@@ -64,13 +64,13 @@ const convertStarList = (backendStars: BackendStar[]): Star[] => {
 			name: star.name,
 			coordinates: {
 				rightAscension: {
-					hours: star.coordinates.substring(0,2),
-					minutes: star.coordinates.substring(2,4),
-					seconds: star.coordinates.substring(4,9),
+					hours: star.coordinates.substring(0, 2),
+					minutes: star.coordinates.substring(2, 4),
+					seconds: star.coordinates.substring(4, 9),
 				},
 				declination: {
-					degrees: star.coordinates.substring(9,12),
-					arcMinutes: star.coordinates.substring(12,14),
+					degrees: star.coordinates.substring(9, 12),
+					arcMinutes: star.coordinates.substring(12, 14),
 					arcSeconds: star.coordinates.substring(14),
 				},
 			},
@@ -80,17 +80,17 @@ const convertStarList = (backendStars: BackendStar[]): Star[] => {
 			},
 			priceInEther: formatPriceString(star.price),
 			isForSale: star.is_for_sale,
-			date: star.date.substring(0,10),
-			time: star.date.substring(11,19),
+			date: star.date.substring(0, 10),
+			time: star.date.substring(11, 19),
 		}
 	});
 };
 
-const formatPriceString = (price: string): string => {
+export const formatPriceString = (price: string): string => {
 	for (var i = price.length - 1; i >= 0; i--) {
-		if(price[i] === "0") {
+		if (price[i] === "0") {
 			price = price.slice(0, -1);
-		} else if(price[i] === ".") {
+		} else if (price[i] === ".") {
 			price = price.slice(0, -1);
 			break;
 		} else {

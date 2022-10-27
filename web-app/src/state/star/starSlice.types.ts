@@ -34,7 +34,17 @@ export interface BackendStar {
 	is_for_sale: boolean;
 	price: string;
 	date: string;
-}
+	action: EventAction;
+};
+
+export enum EventAction {
+	Unknown = 0,
+	Create,
+	SetPrice,
+	SetName,
+	RemoveFromSale,
+	Purchase,
+};
 
 export interface StarSlice {
 	displayList: Star[];

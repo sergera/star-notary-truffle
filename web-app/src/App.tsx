@@ -15,29 +15,31 @@ import { ConnectedToastContainer as ToastContainer } from './components/ToastCon
 
 import { ErrorBoundary } from "./components/ErrorBoundary";
 
+import { listenForStars } from "./listener";
+
 import { ROUTER_PATHS } from "./constants";
 
 import './App.css';
 
 export function App() {
-
-  return (
+	listenForStars();
+	return (
 		<div className="app">
 			<ModalContainer />
 			<NotificationContainer />
 			<ToastContainer />
 			<Header />
 			<Nav />
-			<ErrorBoundary> 
+			<ErrorBoundary>
 				<Routes>
-						<Route path={ROUTER_PATHS.stars} element={<Stars />} />
-						<Route path={ROUTER_PATHS.create} element={<CreateStar />} />
-						<Route path={ROUTER_PATHS.about} element={<About />} />
-						<Route path={ROUTER_PATHS.notFound} element={<ErrorNotFound />} />
-						<Route path={"*"} element={<Navigate to={ROUTER_PATHS.notFound} />} />
+					<Route path={ROUTER_PATHS.stars} element={<Stars />} />
+					<Route path={ROUTER_PATHS.create} element={<CreateStar />} />
+					<Route path={ROUTER_PATHS.about} element={<About />} />
+					<Route path={ROUTER_PATHS.notFound} element={<ErrorNotFound />} />
+					<Route path={"*"} element={<Navigate to={ROUTER_PATHS.notFound} />} />
 				</Routes>
 			</ErrorBoundary>
 			<Footer />
 		</div>
-  );
+	);
 };
