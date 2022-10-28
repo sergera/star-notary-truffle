@@ -47,37 +47,28 @@ const starSlice = createSlice({
 			state.page = 1;
 			state.filter = action.payload;
 		},
-		updateDisplay(state: StarSlice, action: PayloadAction<BackendStar[]>) {
-			const backendStars = action.payload.filter((star) => star.action > EventAction.Create);
-			for (let i = 0; i < backendStars.length; i++) {
-				let idx = state.displayList.findIndex((star) => star.tokenId === backendStars[i].token_id);
-				if (idx !== -1) {
-					let updatedStar = backendStars[i];
-					/* if star is in dispĺay list, update it */
-					switch (updatedStar.action) {
-						case EventAction.Purchase: {
-							state.displayList[idx].owner.address = updatedStar.wallet.address;
-							state.displayList[idx].owner.id = updatedStar.wallet.id;
-							state.displayList[idx].isForSale = updatedStar.is_for_sale;
-							break;
-						}
-						case EventAction.RemoveFromSale: {
-							state.displayList[idx].isForSale = updatedStar.is_for_sale;
-							break;
-						}
-						case EventAction.SetName: {
-							state.displayList[idx].name = updatedStar.name;
-							break;
-						}
-						case EventAction.SetPrice: {
-							state.displayList[idx].isForSale = updatedStar.is_for_sale;
-							state.displayList[idx].priceInEther = formatPriceString(updatedStar.price);
-							break;
-						}
-						default: {
-							continue;
-						}
-					}
+		updateDisplay(state: StarSlice, action: PayloadAction<BackendStar>) {
+			const backendStar = action.payload;
+			let idx = state.displayList.findIndex((star) => star.tokenId === backendStar.token_id);
+			switch (backendStar.action) {
+				case EventAction.Purchase: {
+					state.displayList[idx].owner.address = backendStar.wallet.address;
+					state.displayList[idx].owner.id = backendStar.wallet.id;
+					state.displayList[idx].isForSale = backendStar.is_for_sale;
+					break;
+				}
+				case EventAction.RemoveFromSale: {
+					state.displayList[idx].isForSale = backendStar.is_for_sale;
+					break;
+				}
+				case EventAction.SetName: {
+					state.displayList[idx].name = backendStar.name;
+					break;
+				}
+				case EventAction.SetPrice: {
+					state.displayList[idx].isForSale = backendStar.is_for_sale;
+					state.displayList[idx].priceInEther = formatPriceString(backendStar.price);
+					break;
 				}
 			}
 		},

@@ -9,8 +9,7 @@ var ws: WebSocket;
 export const listenForStars = () => {
 	ws = new WebSocket(`ws://${backendURL}/notify-stars`)
 	ws.onmessage = function (event) {
-		console.log("RECEIVED WEBSOCKET MESSAGE: ", event.data)
-		const backendStars = JSON.parse(event.data);
-		store.dispatch(updateDisplay(backendStars));
+		const backendStar = JSON.parse(event.data);
+		store.dispatch(updateDisplay(backendStar));
 	}
 };
