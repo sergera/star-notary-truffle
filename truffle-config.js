@@ -39,9 +39,9 @@ module.exports = {
    * $ truffle test --network <network-name>
    */
 
-	plugins: ['truffle-plugin-verify'],
+  plugins: ['truffle-plugin-verify'],
 
-	api_keys: {
+  api_keys: {
     etherscan: etherscanKey,
   },
 
@@ -53,39 +53,39 @@ module.exports = {
     // options below to some value.
     //
     development: {
-     host: "127.0.0.1",     // Localhost (default: none)
-     port: 8545,            // Standard Ethereum port (default: none)
-     network_id: "*",       // Any network (default: none)
+      host: "127.0.0.1",     // Localhost (default: none)
+      port: 8545,            // Standard Ethereum port (default: none)
+      network_id: "*",       // Any network (default: none)
     },
 
-		//truffle develop
+    //truffle develop
     truffle_develop: {
-     host: "127.0.0.1",     // Localhost (default: none)
-     port: 8545,            // Standard Ethereum port (default: none)
-     network_id: "*",       // Any network (default: none)
+      host: "127.0.0.1",     // Localhost (default: none)
+      port: 8545,            // Standard Ethereum port (default: none)
+      network_id: "*",       // Any network (default: none)
     },
 
-		//ganache
-		ganache: {
-			host: "127.0.0.1",     // Localhost (default: none)
-			port: 7545,            // Standard Ethereum port (default: none)
-			network_id: "1337",       // Any network (default: none)
-		},
+    //ganache
+    ganache: {
+      host: "127.0.0.1",     // Localhost (default: none)
+      port: 7545,            // Standard Ethereum port (default: none)
+      network_id: "1337",       // Any network (default: none)
+    },
 
-		mainnet: {
-			provider: () => new HDWalletProvider(mnemonic, `${mainnetURL}/${rpcProviderKey}`),
-			network_id: 1,
-		},
+    mainnet: {
+      provider: () => new HDWalletProvider(mnemonic, `${mainnetURL}/${rpcProviderKey}`),
+      network_id: 1,
+    },
 
-		goerli: {
-			provider: () => new HDWalletProvider(mnemonic, `${goerliURL}/${rpcProviderKey}`),
-			network_id: 5,
-		},
+    goerli: {
+      provider: () => new HDWalletProvider(mnemonic, `${goerliURL}/${rpcProviderKey}`),
+      network_id: 5,
+    },
 
-		sepolia: {
-			provider: () => new HDWalletProvider(mnemonic, `${sepoliaURL}/${rpcProviderKey}`),
-			network_id: 11155111,
-		},
+    sepolia: {
+      provider: () => new HDWalletProvider(mnemonic, `${sepoliaURL}/${rpcProviderKey}`),
+      network_id: 11155111,
+    },
     // Another network with more advanced options...
     // advanced: {
     // port: 8777,             // Custom port
@@ -144,13 +144,13 @@ module.exports = {
   // $ truffle migrate --reset --compile-all
   //
   // db: {
-    // enabled: false,
-    // host: "127.0.0.1",
-    // adapter: {
-    //   name: "sqlite",
-    //   settings: {
-    //     directory: ".db"
-    //   }
-    // }
+  // enabled: false,
+  // host: "127.0.0.1",
+  // adapter: {
+  //   name: "sqlite",
+  //   settings: {
+  //     directory: ".db"
+  //   }
+  // }
   // }
 };
