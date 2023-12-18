@@ -5,6 +5,8 @@ in order to enable more focus on what really matters: Smart Contracts and the EV
 
 <p>it comes with basic truffle configurations</p>
 
+<p>it uses truffle version 5.4.30</p>
+
 <p>it currently supports only MetaMask</p>
 
 ## Requirements
