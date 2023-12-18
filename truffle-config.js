@@ -22,7 +22,6 @@ require('dotenv').config();
 
 const HDWalletProvider = require('@truffle/hdwallet-provider');
 const mainnetURL = process.env.RPC_PROVIDER_MAINNET_URL;
-const goerliURL = process.env.RPC_PROVIDER_GOERLI_URL;
 const sepoliaURL = process.env.RPC_PROVIDER_SEPOLIA_URL;
 const rpcProviderKey = process.env.RPC_PROVIDER_KEY;
 const etherscanKey = process.env.ETHERSCAN_KEY;
@@ -75,11 +74,6 @@ module.exports = {
     mainnet: {
       provider: () => new HDWalletProvider(mnemonic, `${mainnetURL}/${rpcProviderKey}`),
       network_id: 1,
-    },
-
-    goerli: {
-      provider: () => new HDWalletProvider(mnemonic, `${goerliURL}/${rpcProviderKey}`),
-      network_id: 5,
     },
 
     sepolia: {
