@@ -10,7 +10,7 @@ else
 endif
 
 CONTRACT_NAME=StarNotary
-DEPLOYED_NETWORK=rinkeby
+DEPLOYED_NETWORK=sepolia
 PROJECT_ROOT_PATH:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
 help: ## Print this help
