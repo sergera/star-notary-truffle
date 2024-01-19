@@ -61,7 +61,7 @@ export function StarNameInput({
 				"non-consecutive spaces in between"
 			]}
 			isRequired={isRequired}
-			styleClass="text-input-1of4"
+			styleClass="text-input-1of2"
 			handleFocus={validateStarName}
 			handleBlur={liftStarName}
 		/>
