@@ -121,7 +121,7 @@ export function CreateStar() {
 				<h1>Register a Star!</h1>
 
 				<p>Here you can register a new star!</p>
-				<p>Both the new star's coordinate and name must be unique</p>
+				<p>Both the new star's coordinate and name must be unique.</p>
 
 				<StarNameInput
 					handleChange={getName}
